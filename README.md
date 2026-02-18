@@ -21,6 +21,15 @@ Este proyecto es un esfuerzo colaborativo. Se han enviado invitaciones de colabo
 *   **@Quiroga**
 *   **@Quirogato**
 
+## 🌿 Estructura de Ramas (Branches)
+Para organizar el desarrollo colaborativo, se han creado ramas específicas para cada integrante del equipo técnico:
+
+*   `iosiv`: Rama principal de desarrollo para Iosiv.
+*   `sebastian`: Rama dedicada a las funcionalidades y diseños de Sebastian.
+*   `juan`: Rama de trabajo para Juan.
+
+Cada colaborador debe trabajar en su respectiva rama antes de realizar un Merge a la rama principal.
+
 ## 🛠️ Tecnologías Utilizadas
 *   **HTML5**: Estructura semántica.
 *   **CSS3**: Diseño moderno y responsivo.
