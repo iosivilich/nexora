@@ -12,6 +12,10 @@ Para llevar este proyecto a producción, se siguieron los siguientes pasos técn
 2.  **Configuración de Git**: Se inicializó el repositorio local, configurando la identidad del autor (`iosivilich`).
 3.  **Vercel CLI**: Se instaló Node.js y la interfaz de comandos de Vercel para realizar un despliegue rápido y eficiente.
 4.  **Hosting**: La página está alojada en **Vercel**, aprovechando su infraestructura de red global para archivos estáticos.
+5.  **Nexa AI Agent**: Se creó un sistema de memoria centralizado en `nexa.md` para coordinar el desarrollo y mantener el contexto estratégico del proyecto.
+
+## 📅 Últimas Actualizaciones
+- **18 Feb 2026**: Inicialización de la memoria del agente Nexa y configuración de la estructura definitiva de ramas para el equipo.
 
 ## 👥 Colaboradores
 Este proyecto es un esfuerzo colaborativo. Se han enviado invitaciones de colaboración a los siguientes miembros del equipo:
