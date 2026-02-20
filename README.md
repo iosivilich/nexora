@@ -15,6 +15,7 @@ Para llevar este proyecto a producción, se siguieron los siguientes pasos técn
 5.  **Nexa AI Agent**: Se creó un sistema de memoria centralizado en `nexa.md` para coordinar el desarrollo y mantener el contexto estratégico del proyecto.
 
 ## 📅 Últimas Actualizaciones
+- **20 Feb 2026**: Implementación del nuevo logo institucional (`Logo_Nexora.png`). Se reemplazó el logo vectorial por la imagen oficial en la barra de navegación, ajustando los estilos CSS para una correcta visualización y eliminando el texto redundante.
 - **18 Feb 2026**: Inicialización de la memoria del agente Nexa y configuración de la estructura definitiva de ramas para el equipo.
 
 ## 👥 Colaboradores
