@@ -26,7 +26,10 @@ body {
     overflow-x: hidden;
 }
 
-h1, h2, h3, .logo-text {
+h1,
+h2,
+h3,
+.logo-text {
     font-family: 'Sora', sans-serif;
 }
 
@@ -61,6 +64,11 @@ h1, h2, h3, .logo-text {
     gap: 0.5rem;
 }
 
+.logo-img {
+    height: 40px;
+    width: auto;
+}
+
 .logo-text {
     font-size: 1.5rem;
     font-weight: 700;
@@ -81,7 +89,8 @@ h1, h2, h3, .logo-text {
     transition: opacity 0.3s;
 }
 
-.nav-links a:hover, .nav-links a.active {
+.nav-links a:hover,
+.nav-links a.active {
     opacity: 1;
 }
 
@@ -198,7 +207,7 @@ h1, h2, h3, .logo-text {
     height: 100%;
     object-fit: cover;
     border-radius: 20px;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
 }
 
 .consultants-highlight h2 {
@@ -218,7 +227,7 @@ h1, h2, h3, .logo-text {
     background: var(--white);
     border-radius: 12px;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
     transition: transform 0.3s;
 }
 
@@ -268,8 +277,13 @@ h1, h2, h3, .logo-text {
     background: var(--action-green);
 }
 
-.progress-bar.gray .progress { background: var(--gray-medium); }
-.progress-bar.purple .progress { background: var(--strategic-purple); }
+.progress-bar.gray .progress {
+    background: var(--gray-medium);
+}
+
+.progress-bar.purple .progress {
+    background: var(--strategic-purple);
+}
 
 .card.horizontal {
     display: flex;
@@ -331,7 +345,7 @@ h1, h2, h3, .logo-text {
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
     cursor: pointer;
     transition: transform 0.3s;
 }
@@ -344,9 +358,11 @@ h1, h2, h3, .logo-text {
     .section-grid {
         grid-template-columns: 1fr;
     }
+
     .hero-content h1 {
         font-size: 2.5rem;
     }
+
     .nav-links {
         display: none;
     }
