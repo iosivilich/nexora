@@ -75,6 +75,15 @@ h3,
     transform: scale(1.05);
 }
 
+.logo-text {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--white);
+    letter-spacing: -0.03em;
+    text-transform: capitalize;
+}
+
 
 
 .nav-links {
