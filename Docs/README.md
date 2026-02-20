@@ -24,6 +24,7 @@ Este proyecto es un esfuerzo colaborativo. Se han enviado invitaciones de colabo
 
 *   **@iosivilich** (Propietario)
 *   **@JuanEContrerasP**
+*   **@Quirogato**
 
 ## 🌿 Estructura de Ramas (Branches)
 Para organizar el desarrollo colaborativo, se han creado ramas específicas para cada integrante del equipo técnico:
