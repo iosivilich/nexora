@@ -15,7 +15,13 @@ Para llevar este proyecto a producción, se siguieron los siguientes pasos técn
 5.  **Nexa AI Agent**: Se creó un sistema de memoria centralizado en `nexa.md` para coordinar el desarrollo y mantener el contexto estratégico del proyecto.
 
 ## 📅 Últimas Actualizaciones
-- **23 Feb 2026**: Ajustes dimensionales de marca. Se redujo el tamaño de la imagen del logo en un 25% y se aumentó el tamaño del texto "Nexora" en un 25% para mejorar el impacto visual.
+- **23 Feb 2026 (Noche)**: Refactorización de UX y navegación dinámica.
+    - Implementación de **Scroll Spy**: La navegación resalta automáticamente la sección activa.
+    - **Navegador de Carreras**: Añadido buscador con autocompletado y filtros por categorías (Tech, Finanzas, etc.).
+    - **Sección Interactiva**: Se hizo funcional la sección "Qué Ofrecemos" con carga dinámica de consultores.
+    - **Ajustes de Marca**: Aumento del 25% en el texto de marca y reducción del 25% en la imagen del logo.
+    - **Limpieza de Proyecto**: Eliminación de directorios redundantes (`.vercel` raíz).
+- **23 Feb 2026**: Ajustes dimensionales iniciales del logo.
 - **20 Feb 2026**: Reorganización estructural completa. Se centralizaron todos los archivos del proyecto (HTML, CSS, activos y configuración de Vercel) dentro de la carpeta `Docs/` para mantener una raíz limpia.
 - **20 Feb 2026**: Cambio de activos. Se estableció `Logo.png` como el logo oficial y se actualizó la tipografía de marca a **Montserrat**.
 - **18 Feb 2026**: Inicialización de la memoria del agente Nexa y configuración de la estructura definitiva de ramas para el equipo.

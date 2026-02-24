@@ -40,7 +40,9 @@ Mi base de conocimientos para este proyecto incluye:
 - [x] Configuración de estructura de ramas (`iosiv`, `sebastian`, `juan`).
 - [x] Documentación de gobernanza en `README.md`.
 - [x] Ajuste visual: Imagen del logo reducida 25% y texto de marca aumentado 25%.
-- [ ] Implementación de nuevas funcionalidades solicitadas por el equipo.
+- [x] Implementación funcional de "Qué Ofrecemos" y buscador de carreras.
+- [x] Sistema de navegación dinámica (Scroll Spy).
+- [x] Limpieza de entorno y documentación actualizada.
 - [ ] Optimización de la experiencia de usuario (UX/UI) según el `Boceto.png`.
 
 ---
