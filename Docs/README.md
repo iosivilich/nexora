@@ -15,7 +15,7 @@ Para llevar este proyecto a producción, se siguieron los siguientes pasos técn
 5.  **Nexa AI Agent**: Se creó un sistema de memoria centralizado en `nexa.md` para coordinar el desarrollo y mantener el contexto estratégico del proyecto.
 
 ## 📅 Últimas Actualizaciones
-- **23 Feb 2026**: Ajuste dimensional del logo. Se redujeron las dimensiones de la imagen y el texto de marca en un 25% para un diseño más equilibrado.
+- **23 Feb 2026**: Ajuste dimensional del logo. Se redujo el tamaño de la imagen del logo en un 25% para un diseño más equilibrado.
 - **20 Feb 2026**: Reorganización estructural completa. Se centralizaron todos los archivos del proyecto (HTML, CSS, activos y configuración de Vercel) dentro de la carpeta `Docs/` para mantener una raíz limpia.
 - **20 Feb 2026**: Cambio de activos. Se estableció `Logo.png` como el logo oficial y se actualizó la tipografía de marca a **Montserrat**.
 - **18 Feb 2026**: Inicialización de la memoria del agente Nexa y configuración de la estructura definitiva de ramas para el equipo.
