@@ -164,8 +164,52 @@ if (careerInput) {
 // Init
 renderConsultants();
 
-// Interactivity for navbar scroll
+// Scroll Spy & Smooth Scroll Logic
+const sections = document.querySelectorAll('section[id]');
+const navLinks = document.querySelectorAll('.nav-links a');
+
+function updateActiveLink() {
+    let scrollPos = window.scrollY + 100; // Adjustment for navbar height
+
+    sections.forEach(section => {
+        if (scrollPos >= section.offsetTop && scrollPos < section.offsetTop + section.offsetHeight) {
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === `#${section.id}`) {
+                    link.classList.add('active');
+                }
+            });
+        }
+    });
+
+    // Special case for top of page
+    if (window.scrollY < 50) {
+        navLinks.forEach(link => link.classList.remove('active'));
+        document.querySelector('.nav-links a[href="#home"]').classList.add('active');
+    }
+}
+
+// Smooth scroll for nav links
+navLinks.forEach(link => {
+    link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        if (href.startsWith('#')) {
+            e.preventDefault();
+            const target = document.querySelector(href);
+            if (target) {
+                window.scrollTo({
+                    top: target.offsetTop - 70, // Offset for fixed navbar
+                    behavior: 'smooth'
+                });
+            }
+        }
+    });
+});
+
 window.addEventListener('scroll', () => {
+    updateActiveLink();
+
+    // Navbar visual feedback on scroll
     const navbar = document.querySelector('.navbar');
     if (window.scrollY > 50) {
         navbar.style.padding = '0.5rem 0';
@@ -175,3 +219,6 @@ window.addEventListener('scroll', () => {
         navbar.style.background = 'rgba(10, 31, 68, 0.8)';
     }
 });
+
+// Run on init
+updateActiveLink();
