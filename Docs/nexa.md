@@ -39,6 +39,7 @@ Mi base de conocimientos para este proyecto incluye:
 - [x] Clonación de repositorio base exitosa.
 - [x] Configuración de estructura de ramas (`iosiv`, `sebastian`, `juan`).
 - [x] Documentación de gobernanza en `README.md`.
+- [x] Reducción de las dimensiones del logo en un 25% (Imagen y Texto) en la rama `iosiv`.
 - [ ] Implementación de nuevas funcionalidades solicitadas por el equipo.
 - [ ] Optimización de la experiencia de usuario (UX/UI) según el `Boceto.png`.
 
