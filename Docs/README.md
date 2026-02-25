@@ -15,9 +15,10 @@ Para llevar este proyecto a producción, se siguieron los siguientes pasos técn
 5.  **Nexa AI Agent**: Se creó un sistema de memoria centralizado en `nexa.md` para coordinar el desarrollo y mantener el contexto estratégico del proyecto.
 
 ## 📅 Últimas Actualizaciones
-- **25 Feb 2026**: Mejora de navegación y conversión (Rama `iosiv`).
-    - **CTA Funcional**: Los botones principales ("Encuentra un Consultor" y "Hablar con un Experto") ahora son enlaces funcionales que redirigen a sus secciones correspondientes.
-    - **Optimización de Scroll**: Se mejoró la lógica de cálculo de posición en `main.js` usando `getBoundingClientRect()` para garantizar que el desplazamiento llegue exactamente al inicio de cada sección, compensando la altura del menú fijo.
+- **25 Feb 2026**: Ajustes visuales y corrección de navegación (Rama `iosiv`).
+    - **Logo reducido 25%**: Tamaño ajustado de 60px a 45px para mejor proporción visual.
+    - **CTA Garantizados**: Los botones "Encuentra un Consultor" y "Hablar con un Experto" llevan navegación `onclick` directa (`scrollIntoView`) para que funcionen de forma independiente del JS externo, eliminando problemas de caché o carga tardía.
+    - **Optimización de Scroll**: Cálculo de posición mejorado con `getBoundingClientRect()` en `main.js` para un desplazamiento preciso compensando la navbar fija.
 - **23 Feb 2026 (Noche)**: Refactorización de UX y navegación dinámica.
     - Implementación de **Scroll Spy**: La navegación resalta automáticamente la sección activa.
     - **Navegador de Carreras**: Añadido buscador con autocompletado y filtros por categorías (Tech, Finanzas, etc.).
