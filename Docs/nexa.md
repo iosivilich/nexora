@@ -43,6 +43,7 @@ Mi base de conocimientos para este proyecto incluye:
 - [x] Implementación funcional de "Qué Ofrecemos" y buscador de carreras.
 - [x] Sistema de navegación dinámica (Scroll Spy).
 - [x] Limpieza de entorno y documentación actualizada.
+- [x] Activación del botón principal (CTA) y mejora del scroll suave global.
 - [ ] Optimización de la experiencia de usuario (UX/UI) según el `Boceto.png`.
 
 ---

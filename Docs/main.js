@@ -189,18 +189,25 @@ function updateActiveLink() {
     }
 }
 
-// Smooth scroll for nav links
-navLinks.forEach(link => {
+// Smooth scroll for all internal links
+document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener('click', (e) => {
         const href = link.getAttribute('href');
-        if (href.startsWith('#')) {
+        console.log('Link clicked:', href); // Debug log
+        if (href.length > 1 && href.startsWith('#')) {
             e.preventDefault();
             const target = document.querySelector(href);
             if (target) {
+                const navbarHeight = 70;
+                const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+
                 window.scrollTo({
-                    top: target.offsetTop - 70, // Offset for fixed navbar
+                    top: targetPosition,
                     behavior: 'smooth'
                 });
+                console.log('Scrolling to:', targetPosition); // Debug log
+            } else {
+                console.warn('Target not found:', href); // Debug log
             }
         }
     });
