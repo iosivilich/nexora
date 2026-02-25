@@ -39,7 +39,11 @@ Mi base de conocimientos para este proyecto incluye:
 - [x] Clonación de repositorio base exitosa.
 - [x] Configuración de estructura de ramas (`iosiv`, `sebastian`, `juan`).
 - [x] Documentación de gobernanza en `README.md`.
-- [ ] Implementación de nuevas funcionalidades solicitadas por el equipo.
+- [x] Ajuste visual: Imagen del logo reducida 25% y texto de marca aumentado 25%.
+- [x] Implementación funcional de "Qué Ofrecemos" y buscador de carreras.
+- [x] Sistema de navegación dinámica (Scroll Spy).
+- [x] Limpieza de entorno y documentación actualizada.
+- [x] Activación del botón principal (CTA) y mejora del scroll suave global.
 - [ ] Optimización de la experiencia de usuario (UX/UI) según el `Boceto.png`.
 
 ---
