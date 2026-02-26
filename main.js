@@ -326,7 +326,7 @@ const nexaKnowledge = {
     startup: "Nexora no es solo un directorio; es la plataforma definitiva que conecta el mejor talento consultor con los retos corporativos más desafiantes del mercado global.",
     creadores: "Nexora es liderada por un equipo visionario: @iosivilich (Project Lead), @JuanEContrerasP (Head of Strategy) y el equipo de ingeniería de @Quiroga.",
     servicios: "Ofrecemos consultoría estratégica en Tecnología (IA, Blockchain, Dev), Finanzas (Estrategia, Regulación), Estrategia de Negocios y Marketing Creativo de alto impacto.",
-    contacto: "Puedes inscribirte ahora mismo en nuestra sección de 'Inscríbete'. Si eres empresa, buscamos tu reto; si eres consultor, buscamos tu talento. ¿Quieres que te lleve allí?"
+    contacto: "Puedes contactarnos vía email en hola@nexora.io, por teléfono al +57 300 000 0000, o seguirnos en nuestras redes sociales oficiales (LinkedIn, X, Instagram) en la sección 'Contáctanos'."
 };
 
 function appendMessage(text, sender) {
