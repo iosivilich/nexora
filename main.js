@@ -385,21 +385,38 @@ function processNexaResponse(input) {
 
     let response = "Interesante planteamiento. Como Nexa, estoy analizando la mejor ruta estratégica para responderte. ¿Te gustaría saber sobre nuestro equipo de consultores, nuestra misión o cómo inscribirte?";
 
-    // Enhanced Intuition Logic
+    // 1. Logic for Searching Consultants inside the AI
+    const searchMatches = consultants.filter(c =>
+        query.includes(c.name.toLowerCase()) ||
+        query.includes(c.category.toLowerCase()) ||
+        query.includes(c.area.toLowerCase()) ||
+        c.skills.some(s => query.includes(s.toLowerCase()))
+    );
+
+    // AI Intuition Keywords
     const keywords = {
         mision: ["mision", "proposito", "objetivo", "meta", "buscan"],
         identidad: ["color", "logo", "visual", "diseño", "look"],
         tech: ["tecnologia", "tech", "stack", "lenguaje", "programación", "vercel"],
-        experts: ["quien", "experto", "consultor", "persona", "equipo", "talento"],
         founder: ["juan", "quiroga", "iosiv", "creador", "dueño", "jefe"],
         services: ["servicio", "que hacen", "ofrecen", "ayuda"],
         signup: ["inscribir", "registro", "unirme", "trabajar", "contratar", "formulario"]
     };
 
-    if (keywords.mision.some(k => query.includes(k))) response = nexaKnowledge.mision;
+    // Priority 1: Specific Consultant Search
+    if (searchMatches.length > 0) {
+        if (searchMatches.length === 1) {
+            const c = searchMatches[0];
+            response = `He encontrado al experto ideal: **${c.name}**, especialista en **${c.area}**. Tiene ${c.experience} de trayectoria y ha liderado ${c.projects} proyectos. <br><br> <button class="btn btn-primary btn-full" style="padding:0.5rem; font-size:0.8rem;" onclick="openProfile(${c.id})">Ver Perfil de ${c.name.split(' ')[0]}</button>`;
+        } else {
+            const names = searchMatches.map(c => c.name).join(", ");
+            response = `He identificado varios expertos que coinciden con tu búsqueda: **${names}**. ¿Sobre cuál de ellos te gustaría profundizar?`;
+        }
+    }
+    // Priority 2: General Knowledge
+    else if (keywords.mision.some(k => query.includes(k))) response = nexaKnowledge.mision;
     else if (keywords.identidad.some(k => query.includes(k))) response = nexaKnowledge.identidad;
     else if (keywords.tech.some(k => query.includes(k))) response = nexaKnowledge.tecnologias;
-    else if (keywords.experts.some(k => query.includes(k))) response = nexaKnowledge.consultores;
     else if (keywords.founder.some(k => query.includes(k))) {
         if (query.includes("juan")) response = "Juan Contreras (@JuanEContrerasP) es nuestro estratega principal y co-arquitecto de la visión Nexora. ¿Quieres ver su impacto en el proyecto?";
         else if (query.includes("iosiv")) response = "Iosivilich es nuestro Project Lead, encargado de que la visión de Nexora se ejecute con precisión milimétrica.";
