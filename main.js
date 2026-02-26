@@ -150,7 +150,7 @@ const consultants = [
         skills: ['Agile Coaching', 'Lean Six Sigma', 'Leadership Training', 'Org Design'],
         projects: 74,
         experience: '14+ años',
-        quote: 'La cultura se desayuna a la estrategia todas las mañanas.'
+        quote: 'La cultura se desayuna a la estrategia todas las masñanas.'
     }
 ];
 
@@ -222,9 +222,9 @@ function renderConsultants() {
 }
 
 // Finder Events
-[careerInput, categorySelect, experienceSelect].forEach(el => {
-    if (el) el.addEventListener('input', renderConsultants);
-});
+if (careerInput) careerInput.addEventListener('input', renderConsultants);
+if (categorySelect) categorySelect.addEventListener('change', renderConsultants);
+if (experienceSelect) experienceSelect.addEventListener('change', renderConsultants);
 
 if (resetBtn) {
     resetBtn.addEventListener('click', () => {
@@ -293,7 +293,7 @@ window.onclick = (event) => {
     }
 }
 
-// Search Logic
+// Search Suggestions Logic
 if (careerInput) {
     careerInput.addEventListener('input', (e) => {
         const val = e.target.value.toLowerCase();
@@ -316,6 +316,7 @@ if (careerInput) {
         if (e.target.classList.contains('suggestion-item')) {
             careerInput.value = e.target.textContent;
             suggestionsBox.style.display = 'none';
+            renderConsultants();
         }
     });
 
@@ -342,7 +343,7 @@ window.switchForm = function (type) {
     });
 }
 
-// NEXA AI LOGIC - INTUITIVE VERSION
+// NEXA AI LOGIC - CORE
 const nexaTrigger = document.getElementById('nexa-trigger');
 const nexaChat = document.getElementById('nexa-chat');
 const closeChat = document.getElementById('close-chat');
@@ -352,13 +353,13 @@ const chatMessages = document.getElementById('chat-messages');
 
 const nexaKnowledge = {
     mision: "Nuestra misión es transformar la consultoría empresarial mediante una conexión rápida, precisa y tecnológica entre expertos y organizaciones de alto nivel.",
-    identidad: "Nexora utiliza una paleta de Azul Eléctrico (#2563EB), Púrpura Estratégico (#6D5EF3) y Verde Acción (#22C55E). Es una estética diseñada para transmitir confianza, modernidad y alto rendimiento.",
-    tecnologias: "Nuestra plataforma está construida con un stack de vanguardia: HTML5 semántico, CSS3 avanzado (Glassmorphism, Flexbox, Grid) y JavaScript Vanilla optimizado. Todo desplegado en Vercel con integración continua.",
-    consultores: "Contamos con una red de élite: Elena Rodríguez (Blockchain), Marco Silvoni (FinTech), Sofía Lin (Crecimiento), Javier Peralta (Branding), Ana Mestre (IA) y Lucas Tanizaki (Cultura Organizacional).",
-    startup: "Nexora no es solo un directorio; es la plataforma definitiva que conecta el mejor talento consultor con los retos corporativos más desafiantes del mercado global.",
-    creadores: "Nexora es liderada por un equipo visionario: @iosivilich (Project Lead), @JuanEContrerasP (Head of Strategy) y el equipo de ingeniería de @Quiroga.",
-    servicios: "Ofrecemos consultoría estratégica en Tecnología (IA, Blockchain, Dev), Finanzas (Estrategia, Regulación), Estrategia de Negocios y Marketing Creativo de alto impacto.",
-    contacto: "Puedes contactarnos vía email en hola@nexora.io, por teléfono al +57 300 000 0000, o seguirnos en nuestras redes sociales oficiales (LinkedIn, X, Instagram) en la sección 'Contáctanos'."
+    identidad: "Nexora utiliza una paleta de Azul Eléctrico (#2563EB), Púrpura Estratégico (#6D5EF3) y Verde Acción (#22C55E).",
+    tecnologias: "Plataforma construida con HTML5, CSS3 Avanzado y JavaScript Vanilla. Desplegada en Vercel.",
+    consultores: "Red de élite: Elena Rodríguez, Marco Silvoni, Sofía Lin, Javier Peralta, Ana Mestre y Lucas Tanizaki.",
+    startup: "Nexora es la plataforma definitiva para conectar talento consultor con retos corporativos.",
+    creadores: "Liderada por @iosivilich, @JuanEContrerasP y equipo @Quiroga.",
+    servicios: "Consultoría en Tecnología, Finanzas, Estrategia y Marketing.",
+    contacto: "Email: hola@nexora.io | Tel: +57 300 000 0000 | LinkedIn oficial."
 };
 
 function appendMessage(text, sender) {
@@ -367,7 +368,6 @@ function appendMessage(text, sender) {
     msgDiv.innerHTML = text;
     chatMessages.appendChild(msgDiv);
     chatMessages.scrollTop = chatMessages.scrollHeight;
-    return msgDiv;
 }
 
 function showTyping() {
@@ -379,15 +379,45 @@ function showTyping() {
     return typingDiv;
 }
 
-function processNexaResponse(input) {
-    // Normalizar para ignorar acentos y mayúsculas
+async function processNexaResponse(input) {
     const normalize = (str) => str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     const query = normalize(input);
     const typingIndicator = showTyping();
 
-    let response = "Interesante planteamiento. Como Nexa, estoy analizando la mejor ruta estratégica para responderte. ¿Te gustaría saber sobre nuestro equipo de consultores, nuestra misión o cómo inscribirte?";
+    // API Context injection
+    const apiContext = {
+        startupInfo: nexaKnowledge.mision + " " + nexaKnowledge.startup,
+        consultants: consultants.map(c => ({
+            name: c.name,
+            area: c.area,
+            skills: c.skills,
+            experience: c.experience,
+            projects: c.projects
+        }))
+    };
 
-    // 1. Logic for Searching Consultants inside the AI - FIXED DIRECTION
+    try {
+        const response = await fetch('/api/chat', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                messages: [{ role: 'user', content: input }],
+                context: apiContext
+            })
+        });
+
+        const data = await response.json();
+        if (data.text) {
+            typingIndicator.remove();
+            appendMessage(data.text, 'nexa');
+            return;
+        }
+    } catch (e) {
+        console.warn("AI Offline: Using fallback engine");
+    }
+
+    // --- FALLBACK LOCAL ENGINE ---
+    let response = "Interesante planteamiento. Como Nexa, estoy analizando la mejor ruta estratégica... (Modo Local)";
     const searchMatches = consultants.filter(c =>
         normalize(c.name).includes(query) ||
         normalize(c.category).includes(query) ||
@@ -395,60 +425,37 @@ function processNexaResponse(input) {
         c.skills.some(s => normalize(s).includes(query))
     );
 
-    // AI Intuition Keywords (Normalized)
     const keywords = {
-        mision: ["mision", "proposito", "objetivo", "meta", "buscan", "quienes son"],
-        identidad: ["color", "logo", "visual", "diseno", "look", "estetica"],
-        tech: ["tecnologia", "tech", "stack", "lenguaje", "programacion", "vercel", "js", "html"],
-        founder: ["juan", "quiroga", "iosiv", "creador", "dueno", "jefe", "equipo"],
-        services: ["servicio", "que hacen", "ofrecen", "ayuda", "asesoria"],
-        signup: ["inscribir", "registro", "unirme", "trabajar", "contratar", "formulario", "unirse"]
+        mision: ["mision", "proposito", "objetivo"],
+        founder: ["juan", "quiroga", "iosiv"],
+        signup: ["inscribir", "unirme"]
     };
 
-    // Priority 1: Specific Consultant Search
     if (query.length > 2 && searchMatches.length > 0) {
         if (searchMatches.length === 1) {
             const c = searchMatches[0];
-            response = `He encontrado al experto ideal: **${c.name}**, especialista en **${c.area}**. Tiene ${c.experience} de trayectoria y ha liderado ${c.projects} proyectos. <br><br> <button class="btn btn-primary btn-full" style="padding:0.5rem; font-size:0.8rem;" onclick="openProfile(${c.id})">Ver Perfil de ${c.name.split(' ')[0]}</button>`;
+            response = `He encontrado a **${c.name}**, experto en **${c.area}**. <br><br> <button class="btn btn-primary btn-full" onclick="openProfile(${c.id})">Ver Perfil</button>`;
         } else {
-            const names = searchMatches.map(c => c.name).join(", ");
-            response = `He identificado varios expertos que coinciden con tu búsqueda: **${names}**. ¿Sobre cuál de ellos te gustaría profundizar?`;
+            response = `Identifiqué estos expertos: **${searchMatches.map(c => c.name).join(", ")}**.`;
         }
-    }
-    // Priority 2: General Knowledge
-    else if (keywords.mision.some(k => query.includes(k))) response = nexaKnowledge.mision;
-    else if (keywords.identidad.some(k => query.includes(k))) response = nexaKnowledge.identidad;
-    else if (keywords.tech.some(k => query.includes(k))) response = nexaKnowledge.tecnologias;
-    else if (keywords.founder.some(k => query.includes(k))) {
-        if (query.includes("juan")) response = "Juan Contreras (@JuanEContrerasP) es nuestro estratega principal y co-arquitecto de la visión Nexora. ¿Quieres ver su impacto en el proyecto?";
-        else if (query.includes("iosiv")) response = "Iosivilich es nuestro Project Lead, encargado de que la visión de Nexora se ejecute con precisión milimétrica.";
-        else response = nexaKnowledge.creadores;
-    }
-    else if (keywords.services.some(k => query.includes(k))) response = nexaKnowledge.servicios;
-    else if (keywords.signup.some(k => query.includes(k))) response = nexaKnowledge.contacto;
-    else if (query.includes("gracias") || query.includes("bueno") || query.includes("ok")) response = "¡Un placer asistirte! En Nexora estamos para escalar tus ideas. ¿Hay algo más en lo que pueda profundizar?";
-    else if (query.includes("hola") || query.includes("que tal") || query.includes("hey")) response = "¡Hola! Soy Nexa. Estoy lista para asistirte en tu navegación estratégica por Nexora. ¿Hablamos de talento, tecnología o de nuestra misión?";
+    } else if (keywords.mision.some(k => query.includes(k))) response = nexaKnowledge.mision;
+    else if (query.includes("hola")) response = "¡Hola! Soy Nexa. Configura la API Key en Vercel para activar mi cerebro avanzado.";
 
     setTimeout(() => {
         typingIndicator.remove();
         appendMessage(response, 'nexa');
-    }, 1200);
+    }, 1000);
 }
 
 window.initContact = function (name) {
-    alert(`Iniciando canal prioritario de comunicación con ${name}. Un estratega de Nexora se pondrá en contacto pronto.`);
+    alert(`Iniciando contacto prioritario con ${name}.`);
 }
 
 if (nexaTrigger) {
-    nexaTrigger.onclick = () => {
-        nexaChat.style.display = nexaChat.style.display === 'flex' ? 'none' : 'flex';
-    };
+    nexaTrigger.onclick = () => nexaChat.style.display = nexaChat.style.display === 'flex' ? 'none' : 'flex';
 }
-
 if (closeChat) {
-    closeChat.onclick = () => {
-        nexaChat.style.display = 'none';
-    };
+    closeChat.onclick = () => nexaChat.style.display = 'none';
 }
 
 function handleSend() {
@@ -461,71 +468,26 @@ function handleSend() {
 }
 
 if (sendChat) sendChat.onclick = handleSend;
-if (chatInput) {
-    chatInput.onkeypress = (e) => {
-        if (e.key === 'Enter') handleSend();
-    };
-}
+if (chatInput) chatInput.onkeypress = (e) => { if (e.key === 'Enter') handleSend(); };
 
-// Init
-renderConsultants();
-
-// Scroll Spy & Smooth Scroll Logic
+// Scroll Logic
 const sections = document.querySelectorAll('section[id]');
 const navLinks = document.querySelectorAll('.nav-links a');
 
-function updateActiveLink() {
-    let scrollPos = window.scrollY + 100; // Adjustment for navbar height
-
+window.addEventListener('scroll', () => {
+    let scrollPos = window.scrollY + 100;
     sections.forEach(section => {
         if (scrollPos >= section.offsetTop && scrollPos < section.offsetTop + section.offsetHeight) {
             navLinks.forEach(link => {
                 link.classList.remove('active');
-                if (link.getAttribute('href') === `#${section.id}`) {
-                    link.classList.add('active');
-                }
+                if (link.getAttribute('href') === `#${section.id}`) link.classList.add('active');
             });
         }
     });
 
-    if (window.scrollY < 50) {
-        navLinks.forEach(link => link.classList.remove('active'));
-        const homeLink = document.querySelector('.nav-links a[href="#home"]');
-        if (homeLink) homeLink.classList.add('active');
-    }
-}
-
-// Smooth scroll for all internal links
-document.querySelectorAll('a[href^="#"]').forEach(link => {
-    link.addEventListener('click', (e) => {
-        const href = link.getAttribute('href');
-        if (href.length > 1 && href.startsWith('#')) {
-            e.preventDefault();
-            const target = document.querySelector(href);
-            if (target) {
-                const navbarHeight = 70;
-                const targetPosition = target.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
-
-                window.scrollTo({
-                    top: targetPosition,
-                    behavior: 'smooth'
-                });
-            }
-        }
-    });
-});
-
-window.addEventListener('scroll', () => {
-    updateActiveLink();
-
     const navbar = document.querySelector('.navbar');
-    if (window.scrollY > 50) {
-        navbar.style.padding = '0.5rem 0';
-        navbar.style.background = 'rgba(10, 31, 68, 0.95)';
-    } else {
-        navbar.style.padding = '1rem 0';
-        navbar.style.background = 'rgba(10, 31, 68, 0.8)';
-    }
+    navbar.style.background = window.scrollY > 50 ? 'rgba(10, 31, 68, 0.95)' : 'rgba(10, 31, 68, 0.8)';
 });
 
-updateActiveLink();
+// Init
+renderConsultants();
