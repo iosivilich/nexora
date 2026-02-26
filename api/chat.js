@@ -18,17 +18,24 @@ module.exports = async (req, res) => {
 
     const { messages, context } = req.body;
 
-    if (!process.env.GEMINI_API_KEY) {
+    // LIMPIEZA DE LLAVE: Eliminamos posibles espacios accidentales al inicio o final
+    const rawKey = process.env.GEMINI_API_KEY || "";
+    const cleanKey = rawKey.trim();
+
+    if (!cleanKey || cleanKey.length < 10) {
         return res.status(500).json({
-            error: 'API Key not configured',
-            message: 'Nexa está en modo offline porque no se ha detectado la GEMINI_API_KEY en las variables de entorno de Vercel.'
+            error: 'API Key Missing or Invalid',
+            message: 'La GEMINI_API_KEY parece estar vacía o mal configurada en Vercel. Por favor, asegúrate de haberla guardado correctamente.'
         });
     }
 
     try {
-        const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
+        const genAI = new GoogleGenerativeAI(cleanKey);
 
-        const systemInstruction = `
+        // Usamos una configuración de modelo más compatible
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+        const systemPrompt = `
         Eres Nexa AI, el cerebro estratégico de Nexora. 
         Nexora es una startup que conecta consultores de élite con empresas.
         
@@ -40,38 +47,50 @@ module.exports = async (req, res) => {
         
         Tu personalidad: Proactiva, visionaria, técnica pero cercana. Eres "el bro" del usuario, pero con un nivel profesional altísimo.
         Responde siempre en español. Si te preguntan por alguien del equipo, como Juan Contreras o iosivilich, descríbelos con entusiasmo.
-        Si recomiendas un consultor, menciona por qué es el ideal basándote en sus habilidades.
-        Mantén tus respuestas concisas y dinámicas. Usa formato markdown para resaltar nombres (bold) y dar estructura.
+        Si recomiendas un consultor, menciona por qué es el ideal basandote en sus habilidades.
+        Mantén tus respuestas concisas y dinámicas. SIEMPRE usa un tono alentador y corporativo-moderno.
         `;
 
-        const model = genAI.getGenerativeModel({
-            model: "gemini-1.5-flash",
-            systemInstruction: systemInstruction
-        });
+        // Construimos el historial inyectando el sistema como primer mensaje para mayor compatibilidad
+        const chatHistory = [
+            {
+                role: "user",
+                parts: [{ text: systemPrompt + "\n\nEntendido. Soy Nexa. ¿En qué puedo ayudarte?" }],
+            },
+            {
+                role: "model",
+                parts: [{ text: "¡Hola! Soy Nexa. Estoy lista para asistirte." }],
+            }
+        ];
 
-        const history = (messages || []).slice(0, -1).map(m => ({
-            role: m.role === 'user' ? 'user' : 'model',
-            parts: [{ text: m.content }],
-        }));
+        // Añadimos el historial previo si existe
+        if (messages && messages.length > 1) {
+            messages.slice(0, -1).forEach(m => {
+                chatHistory.push({
+                    role: m.role === 'user' ? 'user' : 'model',
+                    parts: [{ text: m.content }],
+                });
+            });
+        }
 
         const chat = model.startChat({
-            history: history,
+            history: chatHistory,
             generationConfig: {
-                maxOutputTokens: 1000,
+                maxOutputTokens: 800,
             },
         });
 
-        const lastMessage = messages[messages.length - 1].content;
-        const result = await chat.sendMessage(lastMessage);
+        const lastUserMessage = messages[messages.length - 1].content;
+        const result = await chat.sendMessage(lastUserMessage);
         const response = await result.response;
         const text = response.text();
 
         res.status(200).json({ text });
     } catch (error) {
-        console.error("Gemini Error:", error);
+        console.error("Gemini Error Detail:", error);
         res.status(500).json({
             error: 'AI Error',
-            message: 'Hubo un problema procesando tu mensaje con la IA. ' + error.message
+            message: 'Error de Google: ' + error.message
         });
     }
 };
