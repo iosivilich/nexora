@@ -419,37 +419,37 @@ async function processNexaResponse(input) {
         }
     } catch (e) {
         console.error("Nexa AI API Error:", e.message);
-    }
 
-    // --- FALLBACK LOCAL ENGINE ---
-    let response = "Interesante planteamiento. Como Nexa, estoy analizando la mejor ruta estratégica... (Modo Local)";
-    const searchMatches = consultants.filter(c =>
-        normalize(c.name).includes(query) ||
-        normalize(c.category).includes(query) ||
-        normalize(c.area).includes(query) ||
-        c.skills.some(s => normalize(s).includes(query))
-    );
+        // --- FALLBACK LOCAL ENGINE ---
+        let fallbackText = `⚠️ **Nota:** El cerebro avanzado está desconectado (${e.message}). Entrando en modo de búsqueda local.`;
+        appendMessage(fallbackText, 'nexa');
 
-    const keywords = {
-        mision: ["mision", "proposito", "objetivo"],
-        founder: ["juan", "quiroga", "iosiv"],
-        signup: ["inscribir", "unirme"]
-    };
+        const searchMatches = consultants.filter(c =>
+            normalize(c.name).includes(query) ||
+            normalize(c.category).includes(query) ||
+            normalize(c.area).includes(query) ||
+            c.skills.some(s => normalize(s).includes(query))
+        );
 
-    if (query.length > 2 && searchMatches.length > 0) {
-        if (searchMatches.length === 1) {
-            const c = searchMatches[0];
-            response = `He encontrado a **${c.name}**, experto en **${c.area}**. <br><br> <button class="btn btn-primary btn-full" onclick="openProfile(${c.id})">Ver Perfil</button>`;
-        } else {
-            response = `Identifiqué estos expertos: **${searchMatches.map(c => c.name).join(", ")}**.`;
+        let fallbackResponse = "Interesante planteamiento. Como Nexa local, estoy analizando la mejor ruta estratégica...";
+
+        if (query.length > 2 && searchMatches.length > 0) {
+            if (searchMatches.length === 1) {
+                const c = searchMatches[0];
+                fallbackResponse = `He encontrado a **${c.name}**, experto en **${c.area}**. <br><br> <button class="btn btn-primary btn-full" onclick="openProfile(${c.id})">Ver Perfil</button>`;
+            } else {
+                fallbackResponse = `Identifiqué estos expertos: **${searchMatches.map(c => c.name).join(", ")}**.`;
+            }
+        } else if (query.includes("hola")) {
+            fallbackResponse = "¡Hola! Soy la versión local de Nexa. Parece que hay un problema con la API Key en el servidor. ¿En qué puedo ayudarte manualmente?";
         }
-    } else if (keywords.mision.some(k => query.includes(k))) response = nexaKnowledge.mision;
-    else if (query.includes("hola")) response = "¡Hola! Soy Nexa. Configura la API Key en Vercel para activar mi cerebro avanzado.";
 
-    setTimeout(() => {
-        typingIndicator.remove();
-        appendMessage(response, 'nexa');
-    }, 1000);
+        setTimeout(() => {
+            typingIndicator.remove();
+            appendMessage(fallbackResponse, 'nexa');
+        }, 800);
+        return;
+    }
 }
 
 window.initContact = function (name) {
