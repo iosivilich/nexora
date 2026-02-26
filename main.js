@@ -164,16 +164,43 @@ const careers = [
 const grid = document.getElementById('main-consultants-grid');
 const careerInput = document.getElementById('career-input');
 const suggestionsBox = document.getElementById('search-suggestions');
-const filterBtns = document.querySelectorAll('.filter-btn');
+const categorySelect = document.getElementById('filter-category');
+const experienceSelect = document.getElementById('filter-experience');
+const resetBtn = document.getElementById('reset-filters');
 const modal = document.getElementById('consultant-modal');
 const modalBody = document.getElementById('modal-body');
 const closeModal = document.querySelector('.close-modal');
 
-function renderConsultants(filter = 'all') {
+function renderConsultants() {
     if (!grid) return;
 
+    const searchTerm = careerInput ? careerInput.value.toLowerCase() : '';
+    const category = categorySelect ? categorySelect.value : 'all';
+    const experience = experienceSelect ? experienceSelect.value : 'all';
+
     grid.innerHTML = '';
-    const filtered = filter === 'all' ? consultants : consultants.filter(c => c.category === filter);
+
+    const filtered = consultants.filter(c => {
+        const matchesSearch = c.name.toLowerCase().includes(searchTerm) ||
+            c.area.toLowerCase().includes(searchTerm) ||
+            c.skills.some(s => s.toLowerCase().includes(searchTerm));
+
+        const matchesCategory = category === 'all' || c.category === category;
+
+        let matchesExperience = true;
+        if (experience === 'senior') {
+            matchesExperience = parseInt(c.experience) >= 10;
+        } else if (experience === 'expert') {
+            matchesExperience = parseInt(c.experience) >= 5 && parseInt(c.experience) < 10;
+        }
+
+        return matchesSearch && matchesCategory && matchesExperience;
+    });
+
+    if (filtered.length === 0) {
+        grid.innerHTML = '<div class="no-results">No se encontraron consultores con esos criterios.</div>';
+        return;
+    }
 
     filtered.forEach(c => {
         const card = document.createElement('div');
@@ -191,6 +218,20 @@ function renderConsultants(filter = 'all') {
             </div>
         `;
         grid.appendChild(card);
+    });
+}
+
+// Finder Events
+[careerInput, categorySelect, experienceSelect].forEach(el => {
+    if (el) el.addEventListener('input', renderConsultants);
+});
+
+if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+        if (careerInput) careerInput.value = '';
+        if (categorySelect) categorySelect.value = 'all';
+        if (experienceSelect) experienceSelect.value = 'all';
+        renderConsultants();
     });
 }
 
@@ -251,15 +292,6 @@ window.onclick = (event) => {
         document.body.style.overflow = 'auto';
     }
 }
-
-// Filter Logic
-filterBtns.forEach(btn => {
-    btn.addEventListener('click', () => {
-        filterBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        renderConsultants(btn.dataset.category);
-    });
-});
 
 // Search Logic
 if (careerInput) {

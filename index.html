@@ -66,19 +66,43 @@
                         capacitado para resolver desafíos complejos en tiempo récord.</p>
                 </div>
 
-                <div class="career-navigator">
-                    <h3>¿Qué talento buscas hoy?</h3>
-                    <div class="career-controls">
-                        <div class="career-filters">
-                            <button class="filter-btn active" data-category="all">Todos</button>
-                            <button class="filter-btn" data-category="tech">Tecnología</button>
-                            <button class="filter-btn" data-category="finance">Finanzas</button>
-                            <button class="filter-btn" data-category="strategy">Estrategia</button>
-                            <button class="filter-btn" data-category="marketing">Marketing</button>
+                <div class="finder-box glass">
+                    <div class="finder-header">
+                        <h3>Asistente de Búsqueda Inteligente</h3>
+                        <p>Filtra por especialidad, nombre o nivel de impacto.</p>
+                    </div>
+
+                    <div class="finder-form-grid">
+                        <div class="finder-input-group">
+                            <label>¿A quién o qué buscas?</label>
+                            <div class="search-wrapper">
+                                <input type="text" id="career-input" placeholder="Nombre, carrera o habilidad...">
+                                <div id="search-suggestions" class="suggestions-box"></div>
+                            </div>
                         </div>
-                        <div class="career-search">
-                            <input type="text" id="career-input" placeholder="Escribe la carrera o especialidad...">
-                            <div id="search-suggestions" class="suggestions-box"></div>
+
+                        <div class="finder-input-group">
+                            <label>Categoría</label>
+                            <select id="filter-category" class="finder-select">
+                                <option value="all">Todas las especialidades</option>
+                                <option value="tech">Tecnología & Dev</option>
+                                <option value="finance">Finanzas & Banca</option>
+                                <option value="strategy">Estrategia & Growth</option>
+                                <option value="marketing">Marketing & Branding</option>
+                            </select>
+                        </div>
+
+                        <div class="finder-input-group">
+                            <label>Nivel de Experiencia</label>
+                            <select id="filter-experience" class="finder-select">
+                                <option value="all">Cualquier nivel</option>
+                                <option value="senior">Senior (10+ años)</option>
+                                <option value="expert">Experto (5-10 años)</option>
+                            </select>
+                        </div>
+
+                        <div class="finder-input-group action-align">
+                            <button id="reset-filters" class="btn-text">Limpiar filtros</button>
                         </div>
                     </div>
                 </div>
