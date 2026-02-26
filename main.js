@@ -150,7 +150,7 @@ const consultants = [
         skills: ['Agile Coaching', 'Lean Six Sigma', 'Leadership Training', 'Org Design'],
         projects: 74,
         experience: '14+ años',
-        quote: 'La cultura se desayuna a la estrategia todas las masñanas.'
+        quote: 'La cultura se desayuna a la estrategia todas las mañanas.'
     }
 ];
 
@@ -343,7 +343,7 @@ window.switchForm = function (type) {
     });
 }
 
-// NEXA AI LOGIC - CORE
+// NEXA AI LOGIC - INTUITIVE VERSION
 const nexaTrigger = document.getElementById('nexa-trigger');
 const nexaChat = document.getElementById('nexa-chat');
 const closeChat = document.getElementById('close-chat');
@@ -353,13 +353,13 @@ const chatMessages = document.getElementById('chat-messages');
 
 const nexaKnowledge = {
     mision: "Nuestra misión es transformar la consultoría empresarial mediante una conexión rápida, precisa y tecnológica entre expertos y organizaciones de alto nivel.",
-    identidad: "Nexora utiliza una paleta de Azul Eléctrico (#2563EB), Púrpura Estratégico (#6D5EF3) y Verde Acción (#22C55E).",
-    tecnologias: "Plataforma construida con HTML5, CSS3 Avanzado y JavaScript Vanilla. Desplegada en Vercel.",
-    consultores: "Red de élite: Elena Rodríguez, Marco Silvoni, Sofía Lin, Javier Peralta, Ana Mestre y Lucas Tanizaki.",
-    startup: "Nexora es la plataforma definitiva para conectar talento consultor con retos corporativos.",
-    creadores: "Liderada por @iosivilich, @JuanEContrerasP y equipo @Quiroga.",
-    servicios: "Consultoría en Tecnología, Finanzas, Estrategia y Marketing.",
-    contacto: "Email: hola@nexora.io | Tel: +57 300 000 0000 | LinkedIn oficial."
+    identidad: "Nexora utiliza una paleta de Azul Eléctrico (#2563EB), Púrpura Estratégico (#6D5EF3) y Verde Acción (#22C55E). Es una estética diseñada para transmitir confianza, modernidad y alto rendimiento.",
+    tecnologias: "Nuestra plataforma está construida con un stack de vanguardia: HTML5 semántico, CSS3 avanzado (Glassmorphism, Flexbox, Grid) y JavaScript Vanilla optimizado. Todo desplegado en Vercel con integración continua.",
+    consultores: "Contamos con una red de élite: Elena Rodríguez (Blockchain), Marco Silvoni (FinTech), Sofía Lin (Crecimiento), Javier Peralta (Branding), Ana Mestre (IA) y Lucas Tanizaki (Cultura Organizacional).",
+    startup: "Nexora no es solo un directorio; es la plataforma definitiva que conecta el mejor talento consultor con los retos corporativos más desafiantes del mercado global.",
+    creadores: "Nexora es liderada por un equipo visionario: @iosivilich (Project Lead), @JuanEContrerasP (Head of Strategy) y el equipo de ingeniería de @Quiroga.",
+    servicios: "Ofrecemos consultoría estratégica en Tecnología (IA, Blockchain, Dev), Finanzas (Estrategia, Regulación), Estrategia de Negocios y Marketing Creativo de alto impacto.",
+    contacto: "Puedes contactarnos vía email en hola@nexora.io, por teléfono al +57 300 000 0000, o seguirnos en nuestras redes sociales oficiales (LinkedIn, X, Instagram) en la sección 'Contáctanos'."
 };
 
 function appendMessage(text, sender) {
@@ -379,88 +379,76 @@ function showTyping() {
     return typingDiv;
 }
 
-async function processNexaResponse(input) {
+function processNexaResponse(input) {
+    // Normalizar para ignorar acentos y mayúsculas
     const normalize = (str) => str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
     const query = normalize(input);
     const typingIndicator = showTyping();
 
-    // API Context injection
-    const apiContext = {
-        startupInfo: nexaKnowledge.mision + " " + nexaKnowledge.startup,
-        consultants: consultants.map(c => ({
-            name: c.name,
-            area: c.area,
-            skills: c.skills,
-            experience: c.experience,
-            projects: c.projects
-        }))
+    let response = "Interesante planteamiento. Como Nexa, estoy analizando la mejor ruta estratégica para responderte. ¿Te gustaría saber sobre nuestro equipo de consultores, nuestra misión o cómo inscribirte?";
+
+    // 1. Logic for Searching Consultants inside the AI - FIXED DIRECTION
+    const searchMatches = consultants.filter(c =>
+        normalize(c.name).includes(query) ||
+        normalize(c.category).includes(query) ||
+        normalize(c.area).includes(query) ||
+        c.skills.some(s => normalize(s).includes(query))
+    );
+
+    // AI Intuition Keywords (Normalized)
+    const keywords = {
+        mision: ["mision", "proposito", "objetivo", "meta", "buscan", "quienes son"],
+        identidad: ["color", "logo", "visual", "diseno", "look", "estetica"],
+        tech: ["tecnologia", "tech", "stack", "lenguaje", "programacion", "vercel", "js", "html"],
+        founder: ["juan", "quiroga", "iosiv", "creador", "dueno", "jefe", "equipo"],
+        services: ["servicio", "que hacen", "ofrecen", "ayuda", "asesoria"],
+        signup: ["inscribir", "registro", "unirme", "trabajar", "contratar", "formulario", "unirse"]
     };
 
-    try {
-        const response = await fetch('/api/chat', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                messages: [{ role: 'user', content: input }],
-                context: apiContext
-            })
-        });
-
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.message || `HTTP Error ${response.status}`);
+    // Priority 1: Specific Consultant Search
+    if (query.length > 2 && searchMatches.length > 0) {
+        if (searchMatches.length === 1) {
+            const c = searchMatches[0];
+            response = `He encontrado al experto ideal: **${c.name}**, especialista en **${c.area}**. Tiene ${c.experience} de trayectoria y ha liderado ${c.projects} proyectos. <br><br> <button class="btn btn-primary btn-full" style="padding:0.5rem; font-size:0.8rem;" onclick="openProfile(${c.id})">Ver Perfil de ${c.name.split(' ')[0]}</button>`;
+        } else {
+            const names = searchMatches.map(c => c.name).join(", ");
+            response = `He identificado varios expertos que coinciden con tu búsqueda: **${names}**. ¿Sobre cuál de ellos te gustaría profundizar?`;
         }
-
-        const data = await response.json();
-        if (data.text) {
-            typingIndicator.remove();
-            appendMessage(data.text, 'nexa');
-            return;
-        }
-    } catch (e) {
-        console.error("Nexa AI API Error:", e.message);
-
-        // --- FALLBACK LOCAL ENGINE ---
-        let fallbackText = `⚠️ **Nota:** El cerebro avanzado está desconectado (${e.message}). Entrando en modo de búsqueda local.`;
-        appendMessage(fallbackText, 'nexa');
-
-        const searchMatches = consultants.filter(c =>
-            normalize(c.name).includes(query) ||
-            normalize(c.category).includes(query) ||
-            normalize(c.area).includes(query) ||
-            c.skills.some(s => normalize(s).includes(query))
-        );
-
-        let fallbackResponse = "Interesante planteamiento. Como Nexa local, estoy analizando la mejor ruta estratégica...";
-
-        if (query.length > 2 && searchMatches.length > 0) {
-            if (searchMatches.length === 1) {
-                const c = searchMatches[0];
-                fallbackResponse = `He encontrado a **${c.name}**, experto en **${c.area}**. <br><br> <button class="btn btn-primary btn-full" onclick="openProfile(${c.id})">Ver Perfil</button>`;
-            } else {
-                fallbackResponse = `Identifiqué estos expertos: **${searchMatches.map(c => c.name).join(", ")}**.`;
-            }
-        } else if (query.includes("hola")) {
-            fallbackResponse = "¡Hola! Soy la versión local de Nexa. Parece que hay un problema con la API Key en el servidor. ¿En qué puedo ayudarte manualmente?";
-        }
-
-        setTimeout(() => {
-            typingIndicator.remove();
-            appendMessage(fallbackResponse, 'nexa');
-        }, 800);
-        return;
     }
+    // Priority 2: General Knowledge
+    else if (keywords.mision.some(k => query.includes(k))) response = nexaKnowledge.mision;
+    else if (keywords.identidad.some(k => query.includes(k))) response = nexaKnowledge.identidad;
+    else if (keywords.tech.some(k => query.includes(k))) response = nexaKnowledge.tecnologias;
+    else if (keywords.founder.some(k => query.includes(k))) {
+        if (query.includes("juan")) response = "Juan Contreras (@JuanEContrerasP) es nuestro estratega principal y co-arquitecto de la visión Nexora. ¿Quieres ver su impacto en el proyecto?";
+        else if (query.includes("iosiv")) response = "Iosivilich es nuestro Project Lead, encargado de que la visión de Nexora se ejecute con precisión milimétrica.";
+        else response = nexaKnowledge.creadores;
+    }
+    else if (keywords.services.some(k => query.includes(k))) response = nexaKnowledge.servicios;
+    else if (keywords.signup.some(k => query.includes(k))) response = nexaKnowledge.contacto;
+    else if (query.includes("gracias") || query.includes("bueno") || query.includes("ok")) response = "¡Un placer asistirte! En Nexora estamos para escalar tus ideas. ¿Hay algo más en lo que pueda profundizar?";
+    else if (query.includes("hola") || query.includes("que tal") || query.includes("hey")) response = "¡Hola! Soy Nexa. Estoy lista para asistirte en tu navegación estratégica por Nexora. ¿Hablamos de talento, tecnología o de nuestra misión?";
+
+    setTimeout(() => {
+        typingIndicator.remove();
+        appendMessage(response, 'nexa');
+    }, 1200);
 }
 
 window.initContact = function (name) {
-    alert(`Iniciando contacto prioritario con ${name}.`);
+    alert(`Iniciando canal prioritario de comunicación con ${name}. Un estratega de Nexora se pondrá en contacto pronto.`);
 }
 
 if (nexaTrigger) {
-    nexaTrigger.onclick = () => nexaChat.style.display = nexaChat.style.display === 'flex' ? 'none' : 'flex';
+    nexaTrigger.onclick = () => {
+        nexaChat.style.display = nexaChat.style.display === 'flex' ? 'none' : 'flex';
+    };
 }
+
 if (closeChat) {
-    closeChat.onclick = () => nexaChat.style.display = 'none';
+    closeChat.onclick = () => {
+        nexaChat.style.display = 'none';
+    };
 }
 
 function handleSend() {
@@ -473,9 +461,13 @@ function handleSend() {
 }
 
 if (sendChat) sendChat.onclick = handleSend;
-if (chatInput) chatInput.onkeypress = (e) => { if (e.key === 'Enter') handleSend(); };
+if (chatInput) {
+    chatInput.onkeypress = (e) => {
+        if (e.key === 'Enter') handleSend();
+    };
+}
 
-// Scroll Logic
+// Scroll Spy Logic
 const sections = document.querySelectorAll('section[id]');
 const navLinks = document.querySelectorAll('.nav-links a');
 
