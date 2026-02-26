@@ -1,5 +1,3 @@
-const { GoogleGenerativeAI } = require("@google/generative-ai");
-
 module.exports = async (req, res) => {
     // Enable CORS
     res.setHeader('Access-Control-Allow-Credentials', true)
@@ -17,80 +15,61 @@ module.exports = async (req, res) => {
     }
 
     const { messages, context } = req.body;
+    const apiKey = (process.env.GEMINI_API_KEY || "").trim();
 
-    // LIMPIEZA DE LLAVE: Eliminamos posibles espacios accidentales al inicio o final
-    const rawKey = process.env.GEMINI_API_KEY || "";
-    const cleanKey = rawKey.trim();
-
-    if (!cleanKey || cleanKey.length < 10) {
+    // Verificación de seguridad de la llave
+    if (!apiKey || apiKey.length < 10) {
         return res.status(500).json({
-            error: 'API Key Missing or Invalid',
-            message: 'La GEMINI_API_KEY parece estar vacía o mal configurada en Vercel. Por favor, asegúrate de haberla guardado correctamente.'
+            error: 'Configuración Incompleta',
+            message: 'No se detectó la GEMINI_API_KEY. Asegúrate de que el nombre en Vercel sea exactamente GEMINI_API_KEY y que hayas guardado los cambios.'
         });
     }
 
     try {
-        const genAI = new GoogleGenerativeAI(cleanKey);
+        const systemPrompt = `Eres Nexa AI, el cerebro estratégico de Nexora. 
+        Startup: Nexora conecta consultores de élite con empresas.
+        Contexto: ${context.startupInfo}
+        Consultores: ${JSON.stringify(context.consultants)}
+        Personalidad: Proactiva, visionaria, nivel experto. Responde en español de forma dinámica.`;
 
-        // Usamos una configuración de modelo más compatible
-        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+        const lastMessage = messages[messages.length - 1].content;
 
-        const systemPrompt = `
-        Eres Nexa AI, el cerebro estratégico de Nexora. 
-        Nexora es una startup que conecta consultores de élite con empresas.
-        
-        Contexto de la empresa:
-        ${context.startupInfo || "Nexora conecta talento con retos corporativos."}
-        
-        Nuestros Consultores actuales:
-        ${JSON.stringify(context.consultants || [])}
-        
-        Tu personalidad: Proactiva, visionaria, técnica pero cercana. Eres "el bro" del usuario, pero con un nivel profesional altísimo.
-        Responde siempre en español. Si te preguntan por alguien del equipo, como Juan Contreras o iosivilich, descríbelos con entusiasmo.
-        Si recomiendas un consultor, menciona por qué es el ideal basandote en sus habilidades.
-        Mantén tus respuestas concisas y dinámicas. SIEMPRE usa un tono alentador y corporativo-moderno.
-        `;
+        // --- LLAMADA DIRECTA POR HTTP (Sin librerías intermedias) ---
+        const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`;
 
-        // Construimos el historial inyectando el sistema como primer mensaje para mayor compatibilidad
-        const chatHistory = [
-            {
-                role: "user",
-                parts: [{ text: systemPrompt + "\n\nEntendido. Soy Nexa. ¿En qué puedo ayudarte?" }],
-            },
-            {
-                role: "model",
-                parts: [{ text: "¡Hola! Soy Nexa. Estoy lista para asistirte." }],
-            }
-        ];
-
-        // Añadimos el historial previo si existe
-        if (messages && messages.length > 1) {
-            messages.slice(0, -1).forEach(m => {
-                chatHistory.push({
-                    role: m.role === 'user' ? 'user' : 'model',
-                    parts: [{ text: m.content }],
-                });
-            });
-        }
-
-        const chat = model.startChat({
-            history: chatHistory,
-            generationConfig: {
-                maxOutputTokens: 800,
-            },
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                contents: [{
+                    parts: [{ text: systemPrompt + "\n\nUsuario: " + lastMessage }]
+                }],
+                generationConfig: {
+                    maxOutputTokens: 800,
+                    temperature: 0.7
+                }
+            })
         });
 
-        const lastUserMessage = messages[messages.length - 1].content;
-        const result = await chat.sendMessage(lastUserMessage);
-        const response = await result.response;
-        const text = response.text();
+        const data = await response.json();
 
-        res.status(200).json({ text });
+        // Si Google devuelve un error en el JSON
+        if (data.error) {
+            throw new Error(`Google API: ${data.error.message} (${data.error.status})`);
+        }
+
+        if (data.candidates && data.candidates[0].content) {
+            const text = data.candidates[0].content.parts[0].text;
+            res.status(200).json({ text });
+        } else {
+            throw new Error("Respuesta incompleta de la IA");
+        }
+
     } catch (error) {
-        console.error("Gemini Error Detail:", error);
+        console.error("Critical AI Error:", error.message);
         res.status(500).json({
-            error: 'AI Error',
-            message: 'Error de Google: ' + error.message
+            error: 'Error de Conexión',
+            message: 'Nexa está teniendo problemas técnicos: ' + error.message
         });
     }
 };
