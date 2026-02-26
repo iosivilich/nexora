@@ -174,8 +174,42 @@
         </section>
     </main>
 
+    <!-- Consultant Detail Modal -->
+    <div id="consultant-modal" class="modal">
+        <div class="modal-content glass">
+            <span class="close-modal">&times;</span>
+            <div id="modal-body">
+                <!-- Content injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Nexa AI Chat -->
+    <div id="nexa-chat" class="nexa-chat-container">
+        <div class="nexa-chat-header">
+            <div class="nexa-status">
+                <div class="status-dot"></div>
+                <span>Nexa AI Online</span>
+            </div>
+            <button id="close-chat" class="close-btn">&times;</button>
+        </div>
+        <div id="chat-messages" class="chat-messages">
+            <div class="message nexa">
+                Hola, soy Nexa el agente IA de Nexora. ¿En qué puedo ayudarte hoy estratégicamente?
+            </div>
+        </div>
+        <div class="chat-input-area">
+            <input type="text" id="chat-input" placeholder="Hazme una pregunta sobre Nexora...">
+            <button id="send-chat"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13" />
+                    <polygon points="22 2 15 22 11 13 2 9 22 2" />
+                </svg></button>
+        </div>
+    </div>
+
     <div class="floating-action">
-        <button class="fab">
+        <button id="nexa-trigger" class="fab">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2"
                 stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 1 1-7.6-10.8 8.38 8.38 0 0 1 3.8.9L21 3.5Z" />
