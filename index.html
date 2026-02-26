@@ -89,60 +89,41 @@
             </div>
         </section>
 
-        <section id="nosotros" class="consultants-section">
+        <section id="nosotros" class="about-section">
             <div class="container">
-                <div class="section-grid">
-                    <div class="main-image-placeholder">
-                        <img src="https://images.unsplash.com/photo-1522071823991-b9671f9d7f1f?auto=format&fit=crop&w=800&q=80"
-                            alt="Team working" class="rounded-image">
-                    </div>
+                <div class="about-grid">
+                    <div class="about-content">
+                        <span class="section-badge">Nuestra Esencia</span>
+                        <h2>Más que una plataforma, el motor de la <span>consultoría moderna.</span></h2>
+                        <p class="about-lead">Nexora nace con el propósito de erradicar la brecha entre el conocimiento
+                            experto y la ejecución corporativa.</p>
 
-                    <div class="consultants-highlight">
-                        <h2>Consultores Destacados</h2>
-                        <div class="consultant-cards">
-                            <div class="card consultant-card">
-                                <div class="card-image">
-                                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=300&q=80"
-                                        alt="Laura M.">
-                                </div>
-                                <div class="card-info">
-                                    <h3>Laura M.</h3>
-                                    <p class="specialty">Estrategia Digital</p>
-                                    <span class="experience">10+ años de experiencia.</span>
-                                    <div class="progress-bar">
-                                        <div class="progress" style="width: 85%;"></div>
-                                    </div>
+                        <div class="purpose-items">
+                            <div class="purpose-item">
+                                <div class="icon-box">🎯</div>
+                                <div class="text-box">
+                                    <h4>Nuestra Misión</h4>
+                                    <p>Conectar desafíos complejos con mentes brillantes mediante tecnología de
+                                        precisión, garantizando resultados tangibles en tiempo récord.</p>
                                 </div>
                             </div>
-
-                            <div class="card consultant-card">
-                                <div class="card-image">
-                                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=300&q=80"
-                                        alt="Carlos G.">
-                                </div>
-                                <div class="card-info">
-                                    <h3>Carlos G.</h3>
-                                    <p class="specialty">Consultor IT</p>
-                                    <span class="experience">Especialista en Data.</span>
-                                    <div class="progress-bar gray">
-                                        <div class="progress" style="width: 70%;"></div>
-                                    </div>
+                            <div class="purpose-item">
+                                <div class="icon-box">⚡</div>
+                                <div class="text-box">
+                                    <h4>Alto Rendimiento</h4>
+                                    <p>No creemos en la consultoría de papel. Nuestros expertos están seleccionados por
+                                        su capacidad de ejecución y su trayectoria real en el mercado global.</p>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="card consultant-card horizontal">
-                            <div class="card-image">
-                                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80"
-                                    alt="Andrea R.">
-                            </div>
-                            <div class="card-info">
-                                <h3>Andrea R.</h3>
-                                <p class="specialty">Finanzas & Análisis</p>
-                                <span class="experience">10+ años de experiencia.</span>
-                                <div class="progress-bar purple">
-                                    <div class="progress" style="width: 90%;"></div>
-                                </div>
+                    </div>
+                    <div class="about-image">
+                        <div class="image-stack">
+                            <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80"
+                                alt="Work session" class="img-main">
+                            <div class="experience-card glass">
+                                <span class="num">500+</span>
+                                <span class="lab">Conexiones Exitosas</span>
                             </div>
                         </div>
                     </div>
@@ -150,14 +131,64 @@
             </div>
         </section>
 
-        <section id="inscribete" class="social-proof">
+        <section id="inscribete" class="signup-section">
             <div class="container">
-                <p class="social-title">Empresas que confían en nosotros</p>
-                <div class="logos-grid">
-                    <span class="logo-item">LinkedIn</span>
-                    <span class="logo-item">Google</span>
-                    <span class="logo-item">IBM</span>
-                    <span class="logo-item">Spotify</span>
+                <div class="section-header centered">
+                    <span class="section-badge">Únete a la Red</span>
+                    <h2>Demos el siguiente paso</h2>
+                    <p>Ya seas una empresa buscando impacto o un consultor buscando retos eminentes.</p>
+                </div>
+
+                <div class="signup-container glass">
+                    <div class="signup-tabs">
+                        <button class="tab-btn active" onclick="switchForm('empresa')">Soy una Empresa</button>
+                        <button class="tab-btn" onclick="switchForm('consultor')">Soy un Consultor</button>
+                    </div>
+
+                    <form id="form-empresa" class="signup-form active">
+                        <div class="form-grid">
+                            <div class="input-group">
+                                <label>Nombre de la Empresa</label>
+                                <input type="text" placeholder="Ej. TechCorp S.A." required>
+                            </div>
+                            <div class="input-group">
+                                <label>Área de Interés</label>
+                                <select>
+                                    <option>Tecnología & IA</option>
+                                    <option>Finanzas & Riesgos</option>
+                                    <option>Estrategia de Negocio</option>
+                                    <option>Marketing & Branding</option>
+                                </select>
+                            </div>
+                            <div class="input-group full">
+                                <label>Desafío Principal</label>
+                                <textarea placeholder="Cuéntanos brevemente qué reto quieres resolver..."></textarea>
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full">Solicitar Talento Especializado</button>
+                    </form>
+
+                    <form id="form-consultor" class="signup-form">
+                        <div class="form-grid">
+                            <div class="input-group">
+                                <label>Nombre Completo</label>
+                                <input type="text" placeholder="Ej. Juan Pérez" required>
+                            </div>
+                            <div class="input-group">
+                                <label>Especialidad Principal</label>
+                                <input type="text" placeholder="Ej. Arquitectura Blockchain" required>
+                            </div>
+                            <div class="input-group">
+                                <label>Link de Portfolio / LinkedIn</label>
+                                <input type="url" placeholder="https://linkedin.com/in/tuperfil">
+                            </div>
+                            <div class="input-group">
+                                <label>Años de Experiencia</label>
+                                <input type="number" min="1" placeholder="Ej. 10">
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-full">Postularme como Consultor Elite</button>
+                    </form>
                 </div>
             </div>
         </section>

@@ -563,17 +563,194 @@ h3,
     color: var(--electric-blue);
 }
 
-@media (max-width: 968px) {
-    .section-grid {
+/* About Section Styles */
+.about-section {
+    padding: 100px 0;
+    background: var(--primary-blue);
+}
+
+.about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.about-content h2 span {
+    color: var(--electric-blue);
+}
+
+.about-lead {
+    font-size: 1.2rem;
+    color: var(--gray-medium);
+    margin: 1.5rem 0 3rem;
+}
+
+.purpose-items {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.purpose-item {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+}
+
+.icon-box {
+    width: 50px;
+    height: 50px;
+    background: rgba(37, 99, 235, 0.1);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+}
+
+.text-box h4 {
+    color: var(--white);
+    margin-bottom: 0.5rem;
+}
+
+.text-box p {
+    font-size: 0.95rem;
+    color: var(--gray-medium);
+}
+
+.about-image {
+    position: relative;
+}
+
+.image-stack {
+    position: relative;
+    padding-right: 50px;
+}
+
+.img-main {
+    width: 100%;
+    border-radius: 30px;
+    border: 1px solid var(--glass-border);
+}
+
+.experience-card {
+    position: absolute;
+    bottom: -30px;
+    right: 0;
+    padding: 2rem;
+    border-radius: 20px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.experience-card .num {
+    display: block;
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: var(--action-green);
+}
+
+.experience-card .lab {
+    color: var(--white);
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+/* Signup Section Styles */
+.signup-section {
+    padding: 100px 0;
+    background: linear-gradient(180deg, var(--primary-blue) 0%, #050d1c 100%);
+}
+
+.signup-container {
+    max-width: 800px;
+    margin: 4rem auto 0;
+    padding: 3rem;
+    border-radius: 30px;
+}
+
+.signup-tabs {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 3rem;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.5rem;
+    border-radius: 15px;
+}
+
+.tab-btn {
+    flex: 1;
+    padding: 1rem;
+    border: none;
+    background: none;
+    color: var(--white);
+    font-weight: 600;
+    cursor: pointer;
+    border-radius: 10px;
+    transition: all 0.3s;
+}
+
+.tab-btn.active {
+    background: var(--electric-blue);
+    box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+}
+
+.signup-form {
+    display: none;
+    animation: fadeIn 0.5s ease;
+}
+
+.signup-form.active {
+    display: block;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.input-group.full {
+    grid-column: span 2;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+    color: var(--gray-medium);
+}
+
+.input-group input,
+.input-group select,
+.input-group textarea {
+    width: 100%;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    padding: 1rem;
+    border-radius: 10px;
+    color: var(--white);
+    outline: none;
+    font-family: inherit;
+}
+
+.input-group textarea {
+    height: 120px;
+    resize: none;
+}
+
+@media (max-width: 768px) {
+
+    .about-grid,
+    .form-grid {
         grid-template-columns: 1fr;
     }
 
-    .hero-content h1 {
-        font-size: 2.5rem;
-    }
-
-    .nav-links {
-        display: none;
+    .input-group.full {
+        grid-column: span 1;
     }
 }
 

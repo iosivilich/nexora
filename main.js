@@ -294,7 +294,23 @@ if (careerInput) {
     });
 }
 
-// NEXA AI LOGIC
+// Signup Form Switching
+window.switchForm = function (type) {
+    const btns = document.querySelectorAll('.tab-btn');
+    const forms = document.querySelectorAll('.signup-form');
+
+    btns.forEach(btn => {
+        btn.classList.remove('active');
+        if (btn.textContent.toLowerCase().includes(type)) btn.classList.add('active');
+    });
+
+    forms.forEach(form => {
+        form.classList.remove('active');
+        if (form.id === `form-${type}`) form.classList.add('active');
+    });
+}
+
+// NEXA AI LOGIC - INTUITIVE VERSION
 const nexaTrigger = document.getElementById('nexa-trigger');
 const nexaChat = document.getElementById('nexa-chat');
 const closeChat = document.getElementById('close-chat');
@@ -310,7 +326,7 @@ const nexaKnowledge = {
     startup: "Nexora no es solo un directorio; es la plataforma definitiva que conecta el mejor talento consultor con los retos corporativos más desafiantes del mercado global.",
     creadores: "Nexora es liderada por un equipo visionario: @iosivilich (Project Lead), @JuanEContrerasP (Head of Strategy) y el equipo de ingeniería de @Quiroga.",
     servicios: "Ofrecemos consultoría estratégica en Tecnología (IA, Blockchain, Dev), Finanzas (Estrategia, Regulación), Estrategia de Negocios y Marketing Creativo de alto impacto.",
-    contacto: "Puedes contactarnos directamente para una consultoría estratégica haciendo clic en el botón 'Contactar Ahora' de cualquier perfil o en la sección de 'Inscríbete' en nuestra landing page."
+    contacto: "Puedes inscribirte ahora mismo en nuestra sección de 'Inscríbete'. Si eres empresa, buscamos tu reto; si eres consultor, buscamos tu talento. ¿Quieres que te lleve allí?"
 };
 
 function appendMessage(text, sender) {
@@ -335,19 +351,32 @@ function processNexaResponse(input) {
     const query = input.toLowerCase();
     const typingIndicator = showTyping();
 
-    let response = "Interesante planteamiento. Como Nexa, estoy analizando la mejor ruta estratégica para responderte. ¿Te gustaría saber sobre nuestro equipo de consultores, nuestra misión corporativa o nuestro stack tecnológico?";
+    let response = "Interesante planteamiento. Como Nexa, estoy analizando la mejor ruta estratégica para responderte. ¿Te gustaría saber sobre nuestro equipo de consultores, nuestra misión o cómo inscribirte?";
 
-    if (query.includes("misión") || query.includes("mision") || query.includes("objetivo")) response = nexaKnowledge.mision;
-    else if (query.includes("colores") || query.includes("identidad") || query.includes("logo") || query.includes("visual")) response = nexaKnowledge.identidad;
-    else if (query.includes("tecnología") || query.includes("tech") || query.includes("lenguajes") || query.includes("stack")) response = nexaKnowledge.tecnologias;
-    else if (query.includes("consultores") || query.includes("expertos") || query.includes("quiénes están")) response = nexaKnowledge.consultores;
-    else if (query.includes("quien eres") || query.includes("qué es nexora") || query.includes("que hace nexora")) response = nexaKnowledge.startup;
-    else if (query.includes("equipo") || query.includes("humanos") || query.includes("creadores") || query.includes("dueños")) response = nexaKnowledge.creadores;
-    else if (query.includes("servicios") || query.includes("que ofrecen") || query.includes("ofrecen?")) response = nexaKnowledge.servicios;
-    else if (query.includes("contacto") || query.includes("hablar") || query.includes("contratar")) response = nexaKnowledge.contacto;
-    else if (query.includes("hola") || query.includes("saludos") || query.includes("hey")) response = "¡Hola! Soy Nexa, el agente estratégico de Nexora. Estoy conectada a toda la base de conocimientos de la startup. ¿En qué puedo asistirte en tu camino a la transformación digital?";
-    else if (query.includes("juan")) response = "@JuanEContrerasP es una pieza fundamental en nuestra arquitectura de estrategia y desarrollo. ¿Deseas contactar con él?";
-    else if (query.includes("iosiv")) response = "@iosivilich es el líder de este proyecto y el arquitecto principal de la visión Nexora.";
+    // Enhanced Intuition Logic
+    const keywords = {
+        mision: ["mision", "proposito", "objetivo", "meta", "buscan"],
+        identidad: ["color", "logo", "visual", "diseño", "look"],
+        tech: ["tecnologia", "tech", "stack", "lenguaje", "programación", "vercel"],
+        experts: ["quien", "experto", "consultor", "persona", "equipo", "talento"],
+        founder: ["juan", "quiroga", "iosiv", "creador", "dueño", "jefe"],
+        services: ["servicio", "que hacen", "ofrecen", "ayuda"],
+        signup: ["inscribir", "registro", "unirme", "trabajar", "contratar", "formulario"]
+    };
+
+    if (keywords.mision.some(k => query.includes(k))) response = nexaKnowledge.mision;
+    else if (keywords.identidad.some(k => query.includes(k))) response = nexaKnowledge.identidad;
+    else if (keywords.tech.some(k => query.includes(k))) response = nexaKnowledge.tecnologias;
+    else if (keywords.experts.some(k => query.includes(k))) response = nexaKnowledge.consultores;
+    else if (keywords.founder.some(k => query.includes(k))) {
+        if (query.includes("juan")) response = "Juan Contreras (@JuanEContrerasP) es nuestro estratega principal y co-arquitecto de la visión Nexora. ¿Quieres ver su impacto en el proyecto?";
+        else if (query.includes("iosiv")) response = "Iosivilich es nuestro Project Lead, encargado de que la visión de Nexora se ejecute con precisión milimétrica.";
+        else response = nexaKnowledge.creadores;
+    }
+    else if (keywords.services.some(k => query.includes(k))) response = nexaKnowledge.servicios;
+    else if (keywords.signup.some(k => query.includes(k))) response = nexaKnowledge.contacto;
+    else if (query.includes("gracias") || query.includes("bueno") || query.includes("ok")) response = "¡Un placer asistirte! En Nexora estamos para escalar tus ideas. ¿Hay algo más en lo que pueda profundizar?";
+    else if (query.includes("hola") || query.includes("que tal") || query.includes("hey")) response = "¡Hola! Soy Nexa. Estoy lista para asistirte en tu navegación estratégica por Nexora. ¿Hablamos de talento, tecnología o de nuestra misión?";
 
     setTimeout(() => {
         typingIndicator.remove();
