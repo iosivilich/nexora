@@ -406,6 +406,11 @@ async function processNexaResponse(input) {
             })
         });
 
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || `HTTP Error ${response.status}`);
+        }
+
         const data = await response.json();
         if (data.text) {
             typingIndicator.remove();
@@ -413,7 +418,7 @@ async function processNexaResponse(input) {
             return;
         }
     } catch (e) {
-        console.warn("AI Offline: Using fallback engine");
+        console.error("Nexa AI API Error:", e.message);
     }
 
     // --- FALLBACK LOCAL ENGINE ---
