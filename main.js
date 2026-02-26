@@ -380,31 +380,33 @@ function showTyping() {
 }
 
 function processNexaResponse(input) {
-    const query = input.toLowerCase();
+    // Normalizar para ignorar acentos y mayúsculas
+    const normalize = (str) => str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    const query = normalize(input);
     const typingIndicator = showTyping();
 
     let response = "Interesante planteamiento. Como Nexa, estoy analizando la mejor ruta estratégica para responderte. ¿Te gustaría saber sobre nuestro equipo de consultores, nuestra misión o cómo inscribirte?";
 
-    // 1. Logic for Searching Consultants inside the AI
+    // 1. Logic for Searching Consultants inside the AI - FIXED DIRECTION
     const searchMatches = consultants.filter(c =>
-        query.includes(c.name.toLowerCase()) ||
-        query.includes(c.category.toLowerCase()) ||
-        query.includes(c.area.toLowerCase()) ||
-        c.skills.some(s => query.includes(s.toLowerCase()))
+        normalize(c.name).includes(query) ||
+        normalize(c.category).includes(query) ||
+        normalize(c.area).includes(query) ||
+        c.skills.some(s => normalize(s).includes(query))
     );
 
-    // AI Intuition Keywords
+    // AI Intuition Keywords (Normalized)
     const keywords = {
-        mision: ["mision", "proposito", "objetivo", "meta", "buscan"],
-        identidad: ["color", "logo", "visual", "diseño", "look"],
-        tech: ["tecnologia", "tech", "stack", "lenguaje", "programación", "vercel"],
-        founder: ["juan", "quiroga", "iosiv", "creador", "dueño", "jefe"],
-        services: ["servicio", "que hacen", "ofrecen", "ayuda"],
-        signup: ["inscribir", "registro", "unirme", "trabajar", "contratar", "formulario"]
+        mision: ["mision", "proposito", "objetivo", "meta", "buscan", "quienes son"],
+        identidad: ["color", "logo", "visual", "diseno", "look", "estetica"],
+        tech: ["tecnologia", "tech", "stack", "lenguaje", "programacion", "vercel", "js", "html"],
+        founder: ["juan", "quiroga", "iosiv", "creador", "dueno", "jefe", "equipo"],
+        services: ["servicio", "que hacen", "ofrecen", "ayuda", "asesoria"],
+        signup: ["inscribir", "registro", "unirme", "trabajar", "contratar", "formulario", "unirse"]
     };
 
     // Priority 1: Specific Consultant Search
-    if (searchMatches.length > 0) {
+    if (query.length > 2 && searchMatches.length > 0) {
         if (searchMatches.length === 1) {
             const c = searchMatches[0];
             response = `He encontrado al experto ideal: **${c.name}**, especialista en **${c.area}**. Tiene ${c.experience} de trayectoria y ha liderado ${c.projects} proyectos. <br><br> <button class="btn btn-primary btn-full" style="padding:0.5rem; font-size:0.8rem;" onclick="openProfile(${c.id})">Ver Perfil de ${c.name.split(' ')[0]}</button>`;
