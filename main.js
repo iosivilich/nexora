@@ -76,75 +76,81 @@ animate();
 const consultants = [
     {
         id: 1,
-        name: 'Elena R.',
+        name: 'Elena Rodríguez',
         category: 'tech',
-        area: 'Blockchain & Web3',
-        desc: 'Experta en arquitecturas descentralizadas y smart contracts.',
-        img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=400&q=80',
-        fullBio: 'Elena ha liderado la implementación de soluciones Web3 para gobiernos y empresas Fortune 500. Su enfoque se centra en la escalabilidad y la interoperabilidad de redes descentralizadas.',
-        skills: ['Solidity', 'Rust', 'Hyperledger', 'Web3.js'],
-        projects: 124,
-        experience: '8+ años'
+        area: 'Blockchain & Web3 Architecture',
+        desc: 'Arquitecta de sistemas descentralizados con enfoque en seguridad.',
+        img: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=800&q=80',
+        fullBio: 'Elena es pionera en la implementación de Smart Contracts seguros. Ha auditado protocolos DeFi con más de $500M TVL y diseñado la infraestructura blockchain para tres neobancos europeos. Su especialidad es la transición de infraestructuras legacy hacia soluciones Web3 escalables.',
+        skills: ['Solidity', 'Rust', 'EVM Security', 'Web3.js', 'System Design'],
+        projects: 142,
+        experience: '9+ años',
+        quote: 'La descentralización no es solo tecnología, es la nueva base de la confianza empresarial.'
     },
     {
         id: 2,
-        name: 'Marco S.',
+        name: 'Marco Silvoni',
         category: 'finance',
-        area: 'FinTech Strategy',
-        desc: 'Consultor senior para startups financieras y banca digital.',
-        img: 'https://images.unsplash.com/photo-1556157382-97eda2d62296?auto=format&fit=crop&w=400&q=80',
-        fullBio: 'Marco es un veterano de la banca tradicional que hizo la transición al mundo cripto y fintech hace una década. Ayuda a bancos a modernizar su infraestructura y a startups a navegar regulaciones complejas.',
-        skills: ['Risk Management', 'Bank Regulations', 'DeFi', 'Product Management'],
-        projects: 87,
-        experience: '15+ años'
+        area: 'FinTech & Banking Strategy',
+        desc: 'Estratega financiero experto en regulación y banca digital.',
+        img: 'https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&w=800&q=80',
+        fullBio: 'Ex-ejecutivo de Goldman Sachs con una visión disruptiva. Marco ha guiado la salida a bolsa de dos exitosas fintech latinoamericanas y asesorado a bancos centrales en la implementación de monedas digitales (CBDCs). Es experto en optimización de capital y cumplimiento regulatorio internacional.',
+        skills: ['Financial Modeling', 'Compliance', 'M&A', 'CBDCs', 'Strategic Planning'],
+        projects: 95,
+        experience: '16+ años',
+        quote: 'El futuro del dinero es digital, transparente y programable.'
     },
     {
         id: 3,
-        name: 'Sofía L.',
+        name: 'Sofía Lin',
         category: 'strategy',
-        area: 'Crecimiento Exponencial',
-        desc: 'Especialista en escalado de modelos de negocio disruptivos.',
-        img: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=400&q=80',
-        fullBio: 'Sofía se especializa en "Growth Hacking" corporativo. Ha trabajado con unicornios tecnológicos ayudándolos a pasar de la fase de validación a la internacionalización masiva.',
-        skills: ['Market Entry', 'Scaling', 'Venture Capital', 'Business Design'],
-        projects: 56,
-        experience: '7+ años'
+        area: 'Exponential Growth Strategy',
+        desc: 'Experta en escalado internacional de startups tecnológicas.',
+        img: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&w=800&q=80',
+        fullBio: 'Sofía ha sido la mente detrás del crecimiento de tres unicornios en Silicon Valley. Su metodología "Exponential Leap" combina análisis de datos masivos con psicología del consumidor para desbloquear canales de adquisición que la competencia ignora por completo.',
+        skills: ['Growth Hacking', 'International Expansion', 'Data Analytics', 'Business Model Canvas'],
+        projects: 68,
+        experience: '8+ años',
+        quote: 'Si tu negocio no escala mientras duermes, no tienes un negocio, tienes un auto-empleo.'
     },
     {
         id: 4,
-        name: 'Javier P.',
+        name: 'Javier Peralta',
         category: 'marketing',
-        area: 'Digital Branding',
-        desc: 'Narrativas de marca con impacto global y posicionamiento SEO.',
-        img: 'https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?auto=format&fit=crop&w=400&q=80',
-        fullBio: 'Javier entiende que una marca es más que un logo; es una historia que resuena. Ha transformado la presencia digital de marcas obsoletas convirtiéndolas en líderes de conversación social.',
-        skills: ['SEO', 'Content Marketing', 'Storytelling', 'Analytics'],
-        projects: 190,
-        experience: '10+ años'
+        area: 'Global Branding & Creative Strategy',
+        desc: 'Director creativo especializado en marcas de alto impacto.',
+        img: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=800&q=80',
+        fullBio: 'Galardonado en Cannes Lions, Javier transforma empresas locales en marcas globales con alma. Cree que el marketing funcional ha muerto; lo que hoy mueve mercados son las historias que generan pertenencia y propósito.',
+        skills: ['Storytelling', 'Consumer Behavior', 'Content Strategy', 'UX Writing'],
+        projects: 215,
+        experience: '12+ años',
+        quote: 'Las personas no compran productos, compran mejores versiones de sí mismas.'
     },
     {
         id: 5,
-        name: 'Ana M.',
+        name: 'Ana Mestre',
         category: 'tech',
-        area: 'AI & Machine Learning',
-        desc: 'Implementación estratégica de modelos predictivos y LLMs.',
-        img: 'https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=400&q=80',
-        fullBio: 'Ana ayuda a las empresas a no quedarse atrás en la revolución de la IA. Desde la automatización de procesos hasta la creación de agentes inteligentes personalizados.',
-        skills: ['Python', 'TensorFlow', 'PyTorch', 'LLM Fine-tuning'],
-        projects: 45,
-        experience: '6+ años'
+        area: 'AI & Data Science Lead',
+        desc: 'Líder técnica en implementación de IA generativa y LLMs.',
+        img: 'https://images.unsplash.com/photo-1544005313-94ddf0286df2?auto=format&fit=crop&w=800&q=80',
+        fullBio: 'Ph.D. en Ciencias de la Computación, Ana traduce el ruido de la IA en resultados de negocio tangibles. Ha desarrollado sistemas de recomendación que aumentaron la retención en un 40% para plataformas de streaming y optimizado cadenas de suministro globales mediante modelos predictivos.',
+        skills: ['Python', 'Large Language Models', 'Predictive Analytics', 'TensorFlow'],
+        projects: 51,
+        experience: '7+ años',
+        quote: 'La IA no reemplazará a los humanos, pero los humanos que usan IA sí reemplazarán a los que no.'
     },
     {
         id: 6,
-        name: 'Lucas T.',
+        name: 'Lucas Tanizaki',
         category: 'strategy',
-        area: 'Gestión del Cambio',
-        desc: 'Acompañamiento en procesos de transformación organizacional.',
-        img: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=400&q=80',
-        fullBio: 'Lucas es el experto al que llamas cuando tu empresa está en crisis de identidad o transformación. Su metodología de gestión del cambio reduce la fricción y aumenta la productividad del equipo.',
-        skills: ['Agile', 'Organizational Psychology', 'Lean', 'Coaching'],
-        projects: 67,
-        experience: '12+ años'
+        area: 'Organizational Change Management',
+        desc: 'Consultor de cultura y procesos de transformación ágil.',
+        img: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=800&q=80',
+        fullBio: 'Lucas es experto en desbloquear el potencial humano en entornos corporativos rígidos. Su enfoque ágil ha permitido a corporaciones tradicionales adoptar una mentalidad de startup, reduciendo el "time-to-market" en más de un 60% mediante la optimización de flujos de trabajo.',
+        skills: ['Agile Coaching', 'Lean Six Sigma', 'Leadership Training', 'Org Design'],
+        projects: 74,
+        experience: '14+ años',
+        quote: 'La cultura se desayuna a la estrategia todas las mañanas.'
     }
 ];
 
@@ -199,30 +205,33 @@ window.openProfile = function (id) {
             <div class="modal-title">
                 <h2>${consultant.name}</h2>
                 <p class="specialty">${consultant.area}</p>
+                <p class="experience-badge">${consultant.experience} de excelencia</p>
             </div>
         </div>
-        <div class="modal-description">
-            <h4>Sobre ${consultant.name}</h4>
-            <p>${consultant.fullBio}</p>
-        </div>
-        <div class="modal-info-grid">
-            <div class="info-item">
-                <h4>Experiencia</h4>
-                <p>${consultant.experience}</p>
+        <div class="modal-main-content">
+            <div class="modal-description">
+                <p class="modal-quote">"${consultant.quote}"</p>
+                <h4>Trayectoria Estratégica</h4>
+                <p>${consultant.fullBio}</p>
             </div>
-            <div class="info-item">
-                <h4>Proyectos Exitosos</h4>
-                <p>${consultant.projects}</p>
-            </div>
-            <div class="info-item">
-                <h4>Habilidades Clave</h4>
-                <div class="skills-tags">
-                    ${consultant.skills.map(s => `<span class="skill-tag">${s}</span>`).join('')}
+            <div class="modal-info-grid">
+                <div class="info-item">
+                    <h4>Impacto</h4>
+                    <div class="stat-circle">
+                        <span class="stat-number">${consultant.projects}</span>
+                        <span class="stat-label">Proyectos</span>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <h4>Core Stack & Skills</h4>
+                    <div class="skills-tags">
+                        ${consultant.skills.map(s => `<span class="skill-tag">${s}</span>`).join('')}
+                    </div>
                 </div>
             </div>
         </div>
-        <div style="margin-top: 2.5rem; text-align: center;">
-            <button class="btn btn-primary" onclick="alert('Iniciando proceso de contacto con ${consultant.name}...')">Contactar Ahora</button>
+        <div class="modal-footer-actions">
+            <button class="btn btn-primary btn-full" onclick="initContact('${consultant.name}')">Agendar Consultoría Senior</button>
         </div>
     `;
     modal.style.display = 'block';
@@ -294,37 +303,60 @@ const sendChat = document.getElementById('send-chat');
 const chatMessages = document.getElementById('chat-messages');
 
 const nexaKnowledge = {
-    mision: "Nuestra misión es transformar la consultoría empresarial mediante una conexión rápida, precisa y tecnológica entre expertos y organizaciones.",
-    identidad: "Azul Eléctrico (#2563EB), Púrpura Estratégico (#6D5EF3) y Verde Acción (#22C55E). Es visualmente profesional, moderna y de alto rendimiento.",
-    tecnologias: "Frontend con HTML5, CSS3 (Glassmorphism) y JS Vanilla. Despliegue en Vercel con CI/CD.",
-    consultores: "Contamos con expertos en Blockchain (Elena R.), FinTech (Marco S.), Estrategia (Sofía L.), Marketing (Javier P.), IA (Ana M.) y Gestión del Cambio (Lucas T.).",
-    startup: "Nexora es la plataforma que conecta al mejor talento consultor con los retos corporativos más desafiantes.",
-    creadores: "El equipo principal está formado por @iosivilich, @JuanEContrerasP y el equipo técnico de @Quiroga."
+    mision: "Nuestra misión es transformar la consultoría empresarial mediante una conexión rápida, precisa y tecnológica entre expertos y organizaciones de alto nivel.",
+    identidad: "Nexora utiliza una paleta de Azul Eléctrico (#2563EB), Púrpura Estratégico (#6D5EF3) y Verde Acción (#22C55E). Es una estética diseñada para transmitir confianza, modernidad y alto rendimiento.",
+    tecnologias: "Nuestra plataforma está construida con un stack de vanguardia: HTML5 semántico, CSS3 avanzado (Glassmorphism, Flexbox, Grid) y JavaScript Vanilla optimizado. Todo desplegado en Vercel con integración continua.",
+    consultores: "Contamos con una red de élite: Elena Rodríguez (Blockchain), Marco Silvoni (FinTech), Sofía Lin (Crecimiento), Javier Peralta (Branding), Ana Mestre (IA) y Lucas Tanizaki (Cultura Organizacional).",
+    startup: "Nexora no es solo un directorio; es la plataforma definitiva que conecta el mejor talento consultor con los retos corporativos más desafiantes del mercado global.",
+    creadores: "Nexora es liderada por un equipo visionario: @iosivilich (Project Lead), @JuanEContrerasP (Head of Strategy) y el equipo de ingeniería de @Quiroga.",
+    servicios: "Ofrecemos consultoría estratégica en Tecnología (IA, Blockchain, Dev), Finanzas (Estrategia, Regulación), Estrategia de Negocios y Marketing Creativo de alto impacto.",
+    contacto: "Puedes contactarnos directamente para una consultoría estratégica haciendo clic en el botón 'Contactar Ahora' de cualquier perfil o en la sección de 'Inscríbete' en nuestra landing page."
 };
 
 function appendMessage(text, sender) {
     const msgDiv = document.createElement('div');
     msgDiv.className = `message ${sender}`;
-    msgDiv.textContent = text;
+    msgDiv.innerHTML = text;
     chatMessages.appendChild(msgDiv);
     chatMessages.scrollTop = chatMessages.scrollHeight;
+    return msgDiv;
+}
+
+function showTyping() {
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'message nexa typing';
+    typingDiv.innerHTML = '<span class="dot"></span><span class="dot"></span><span class="dot"></span>';
+    chatMessages.appendChild(typingDiv);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+    return typingDiv;
 }
 
 function processNexaResponse(input) {
     const query = input.toLowerCase();
-    let response = "Interesante pregunta. Como Nexa AI, estoy procesando tu solicitud estratégica. ¿Te refieres a nuestros consultores, nuestra misión o tecnología?";
+    const typingIndicator = showTyping();
 
-    if (query.includes("misión") || query.includes("mision") || query.includes("misión?")) response = nexaKnowledge.mision;
-    else if (query.includes("colores") || query.includes("identidad") || query.includes("logo")) response = nexaKnowledge.identidad;
-    else if (query.includes("tecnología") || query.includes("tech") || query.includes("stack")) response = nexaKnowledge.tecnologias;
-    else if (query.includes("consultores") || query.includes("expertos")) response = nexaKnowledge.consultores;
-    else if (query.includes("quien eres") || query.includes("que es nexora")) response = nexaKnowledge.startup;
-    else if (query.includes("equipo") || query.includes("humanos") || query.includes("creadores")) response = nexaKnowledge.creadores;
-    else if (query.includes("hola") || query.includes("buenos dias")) response = "¡Hola! Soy Nexa. Estoy lista para ayudarte con cualquier duda sobre Nexora. ¿Qué necesitas saber?";
+    let response = "Interesante planteamiento. Como Nexa, estoy analizando la mejor ruta estratégica para responderte. ¿Te gustaría saber sobre nuestro equipo de consultores, nuestra misión corporativa o nuestro stack tecnológico?";
+
+    if (query.includes("misión") || query.includes("mision") || query.includes("objetivo")) response = nexaKnowledge.mision;
+    else if (query.includes("colores") || query.includes("identidad") || query.includes("logo") || query.includes("visual")) response = nexaKnowledge.identidad;
+    else if (query.includes("tecnología") || query.includes("tech") || query.includes("lenguajes") || query.includes("stack")) response = nexaKnowledge.tecnologias;
+    else if (query.includes("consultores") || query.includes("expertos") || query.includes("quiénes están")) response = nexaKnowledge.consultores;
+    else if (query.includes("quien eres") || query.includes("qué es nexora") || query.includes("que hace nexora")) response = nexaKnowledge.startup;
+    else if (query.includes("equipo") || query.includes("humanos") || query.includes("creadores") || query.includes("dueños")) response = nexaKnowledge.creadores;
+    else if (query.includes("servicios") || query.includes("que ofrecen") || query.includes("ofrecen?")) response = nexaKnowledge.servicios;
+    else if (query.includes("contacto") || query.includes("hablar") || query.includes("contratar")) response = nexaKnowledge.contacto;
+    else if (query.includes("hola") || query.includes("saludos") || query.includes("hey")) response = "¡Hola! Soy Nexa, el agente estratégico de Nexora. Estoy conectada a toda la base de conocimientos de la startup. ¿En qué puedo asistirte en tu camino a la transformación digital?";
+    else if (query.includes("juan")) response = "@JuanEContrerasP es una pieza fundamental en nuestra arquitectura de estrategia y desarrollo. ¿Deseas contactar con él?";
+    else if (query.includes("iosiv")) response = "@iosivilich es el líder de este proyecto y el arquitecto principal de la visión Nexora.";
 
     setTimeout(() => {
+        typingIndicator.remove();
         appendMessage(response, 'nexa');
-    }, 600);
+    }, 1200);
+}
+
+window.initContact = function (name) {
+    alert(`Iniciando canal prioritario de comunicación con ${name}. Un estratega de Nexora se pondrá en contacto pronto.`);
 }
 
 if (nexaTrigger) {

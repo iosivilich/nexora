@@ -813,6 +813,116 @@ h3,
     background: var(--strategic-purple);
 }
 
+/* Modal Body Design Update */
+.experience-badge {
+    background: var(--action-green);
+    color: white;
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    display: inline-block;
+    margin-top: 0.5rem;
+    text-transform: uppercase;
+}
+
+.modal-quote {
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--electric-blue);
+    border-left: 3px solid var(--electric-blue);
+    padding-left: 1rem;
+    margin-bottom: 2rem;
+    line-height: 1.4;
+}
+
+.modal-main-content {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    gap: 3rem;
+    margin-top: 1rem;
+}
+
+.stat-circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    border: 2px solid var(--glass-border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.03);
+    margin-top: 1rem;
+}
+
+.stat-number {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--action-green);
+}
+
+.stat-label {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    opacity: 0.6;
+}
+
+.btn-full {
+    width: 100%;
+    padding: 1.2rem;
+    font-size: 1.1rem;
+    margin-top: 1rem;
+}
+
+/* Typing Animation */
+.typing {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.dot {
+    width: 6px;
+    height: 6px;
+    background: var(--gray-medium);
+    border-radius: 50%;
+    animation: bounce 1.4s infinite ease-in-out both;
+}
+
+.dot:nth-child(1) {
+    animation-delay: -0.32s;
+}
+
+.dot:nth-child(2) {
+    animation-delay: -0.16s;
+}
+
+@keyframes bounce {
+
+    0%,
+    80%,
+    100% {
+        transform: scale(0);
+    }
+
+    40% {
+        transform: scale(1.0);
+    }
+}
+
+@media (max-width: 768px) {
+    .modal-main-content {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .modal-header {
+        flex-direction: column;
+        text-align: center;
+    }
+}
+
 @media (max-width: 480px) {
     .nexa-chat-container {
         width: 100%;
