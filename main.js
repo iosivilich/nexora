@@ -1,76 +1,137 @@
-const canvas = document.getElementById('canvas-nodes');
-const ctx = canvas.getContext('2d');
+const canvas = document.getElementById('sequence-canvas');
+const context = canvas.getContext('2d');
+const sequenceContainer = document.getElementById('hero-sequence-container');
 
-let particles = [];
-const particleCount = 40;
+// Canvas Configuration
+canvas.width = 1400;
+canvas.height = Math.floor(1400 * (9 / 16));
 
-function resize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+const frameCount = 40; // Total number of frames extracted
+const currentFrame = index => (
+    `assets/animations/nexora-network/ezgif-frame-${index.toString().padStart(3, '0')}.png`
+);
+
+const images = [];
+const nexoraSequenceObj = {
+    frame: 0
+};
+
+// Preload Images
+for (let i = 1; i <= frameCount; i++) {
+    const img = new Image();
+    img.src = currentFrame(i);
+    images.push(img);
 }
 
-window.addEventListener('resize', resize);
-resize();
+const pCanvas = document.getElementById('particles-canvas');
+let pCtx = null;
+if (pCanvas) {
+    pCtx = pCanvas.getContext('2d');
+}
 
-class Particle {
+let energyParticles = [];
+
+function initParticles() {
+    if (!pCanvas) return;
+    pCanvas.width = window.innerWidth;
+    pCanvas.height = window.innerHeight;
+    energyParticles = [];
+    for (let i = 0; i < 60; i++) energyParticles.push(new EnergyParticle());
+}
+
+class EnergyParticle {
     constructor() {
         this.reset();
+        this.angle = Math.random() * Math.PI * 2;
+        this.speed = 0.0005 + Math.random() * 0.001;
+        this.distance = 150 + Math.random() * 400; // Orbit radius
+        this.yOffset = (Math.random() - 0.5) * 150;
     }
-
     reset() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.vx = (Math.random() - 0.5) * 0.5;
-        this.vy = (Math.random() - 0.5) * 0.5;
-        this.radius = Math.random() * 2 + 1;
+        this.radius = Math.random() * 1.5 + 0.5;
+        this.alpha = Math.random() * 0.4 + 0.1;
     }
-
     update() {
-        this.x += this.vx;
-        this.y += this.vy;
-
-        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+        this.angle += this.speed;
     }
-
     draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(109, 94, 243, 0.5)';
-        ctx.fill();
+        if (!pCtx) return;
+        const cx = pCanvas.width / 2;
+        const cy = pCanvas.height / 2;
+        const px = cx + Math.cos(this.angle) * this.distance;
+        const py = cy + Math.sin(this.angle) * (this.distance * 0.4) + this.yOffset;
+
+        pCtx.beginPath();
+        pCtx.arc(px, py, this.radius, 0, Math.PI * 2);
+        pCtx.fillStyle = `rgba(125, 249, 255, ${this.alpha})`;
+        pCtx.shadowBlur = 8;
+        pCtx.shadowColor = '#4CC9F0';
+        pCtx.fill();
     }
 }
 
-for (let i = 0; i < particleCount; i++) {
-    particles.push(new Particle());
+if (pCanvas) {
+    window.addEventListener('resize', initParticles);
+    initParticles();
 }
 
-function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+// Render Loop
+function renderLoop() {
+    // 1. Render sequence frame
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    const imgIndex = Math.floor(nexoraSequenceObj.frame);
+    if (images[imgIndex]) {
+        context.drawImage(images[imgIndex], 0, 0, canvas.width, canvas.height);
+    }
 
-    particles.forEach(p => {
-        p.update();
-        p.draw();
-
-        particles.forEach(p2 => {
-            const dx = p.x - p2.x;
-            const dy = p.y - p2.y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-
-            if (distance < 150) {
-                ctx.beginPath();
-                ctx.moveTo(p.x, p.y);
-                ctx.lineTo(p2.x, p2.y);
-                ctx.strokeStyle = `rgba(37, 99, 235, ${0.1 * (1 - distance / 150)})`;
-                ctx.stroke();
-            }
+    // 2. Render orbit particles
+    if (pCtx) {
+        pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
+        energyParticles.forEach(p => {
+            p.update();
+            p.draw();
         });
-    });
+    }
 
-    requestAnimationFrame(animate);
+    requestAnimationFrame(renderLoop);
 }
 
-animate();
+// Start continuous loop when first image loads
+images[0].onload = renderLoop;
+
+// Scroll Handling
+function handleScroll() {
+    const heroSection = document.querySelector('.hero');
+    const backgroundLayer = document.getElementById('hero-background-layer');
+    const animationLayer = document.getElementById('hero-animation-layer');
+
+    if (!heroSection) return;
+
+    const heroHeight = heroSection.offsetHeight - window.innerHeight; // Scrollable distance within hero
+    const scrollPos = window.scrollY;
+
+    // Calculate Animation Progress
+    let progress = scrollPos / heroHeight;
+    progress = Math.max(0, Math.min(1, progress)); // Clamp between 0 and 1
+
+    // Update Frame
+    nexoraSequenceObj.frame = progress * (frameCount - 1);
+
+    // Update 3D Parallax Motion (Subtle depth)
+    const bgTranslateY = -(progress * 20); // slower
+    const animTranslateY = -(progress * 40); // medium
+    const scale = 1 + (progress * 0.02); // scale from 1 to 1.02
+
+    if (backgroundLayer) {
+        backgroundLayer.style.transform = `translateZ(0) translateY(${bgTranslateY}px)`;
+    }
+    if (animationLayer) {
+        animationLayer.style.transform = `translateZ(0) translateY(${animTranslateY}px) scale(${scale})`;
+    }
+}
+
+window.addEventListener('scroll', handleScroll, { passive: true });
+window.addEventListener('resize', handleScroll); // Recalculate hero height on resize
 
 // Career Interactivity & Consultant Grid
 const consultants = [
