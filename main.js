@@ -23,21 +23,90 @@ for (let i = 1; i <= frameCount; i++) {
     images.push(img);
 }
 
-// Render Initial Frame
-images[0].onload = render;
+const pCanvas = document.getElementById('particles-canvas');
+let pCtx = null;
+if (pCanvas) {
+    pCtx = pCanvas.getContext('2d');
+}
 
-function render() {
+let energyParticles = [];
+
+function initParticles() {
+    if (!pCanvas) return;
+    pCanvas.width = window.innerWidth;
+    pCanvas.height = window.innerHeight;
+    energyParticles = [];
+    for (let i = 0; i < 60; i++) energyParticles.push(new EnergyParticle());
+}
+
+class EnergyParticle {
+    constructor() {
+        this.reset();
+        this.angle = Math.random() * Math.PI * 2;
+        this.speed = 0.0005 + Math.random() * 0.001;
+        this.distance = 150 + Math.random() * 400; // Orbit radius
+        this.yOffset = (Math.random() - 0.5) * 150;
+    }
+    reset() {
+        this.radius = Math.random() * 1.5 + 0.5;
+        this.alpha = Math.random() * 0.4 + 0.1;
+    }
+    update() {
+        this.angle += this.speed;
+    }
+    draw() {
+        if (!pCtx) return;
+        const cx = pCanvas.width / 2;
+        const cy = pCanvas.height / 2;
+        const px = cx + Math.cos(this.angle) * this.distance;
+        const py = cy + Math.sin(this.angle) * (this.distance * 0.4) + this.yOffset;
+
+        pCtx.beginPath();
+        pCtx.arc(px, py, this.radius, 0, Math.PI * 2);
+        pCtx.fillStyle = `rgba(125, 249, 255, ${this.alpha})`;
+        pCtx.shadowBlur = 8;
+        pCtx.shadowColor = '#4CC9F0';
+        pCtx.fill();
+    }
+}
+
+if (pCanvas) {
+    window.addEventListener('resize', initParticles);
+    initParticles();
+}
+
+// Render Loop
+function renderLoop() {
+    // 1. Render sequence frame
     context.clearRect(0, 0, canvas.width, canvas.height);
     const imgIndex = Math.floor(nexoraSequenceObj.frame);
     if (images[imgIndex]) {
         context.drawImage(images[imgIndex], 0, 0, canvas.width, canvas.height);
     }
+
+    // 2. Render orbit particles
+    if (pCtx) {
+        pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
+        energyParticles.forEach(p => {
+            p.update();
+            p.draw();
+        });
+    }
+
+    requestAnimationFrame(renderLoop);
 }
+
+// Start continuous loop when first image loads
+images[0].onload = renderLoop;
 
 // Scroll Handling
 function handleScroll() {
     const heroSection = document.querySelector('.hero');
+    const backgroundLayer = document.getElementById('hero-background-layer');
     const animationLayer = document.getElementById('hero-animation-layer');
+
+    if (!heroSection) return;
+
     const heroHeight = heroSection.offsetHeight - window.innerHeight; // Scrollable distance within hero
     const scrollPos = window.scrollY;
 
@@ -49,15 +118,16 @@ function handleScroll() {
     nexoraSequenceObj.frame = progress * (frameCount - 1);
 
     // Update 3D Parallax Motion (Subtle depth)
-    const translateY = -(progress * 40); // max -40px
+    const bgTranslateY = -(progress * 20); // slower
+    const animTranslateY = -(progress * 40); // medium
     const scale = 1 + (progress * 0.02); // scale from 1 to 1.02
 
-    if (animationLayer) {
-        animationLayer.style.transform = `translateZ(0) translateY(${translateY}px) scale(${scale})`;
+    if (backgroundLayer) {
+        backgroundLayer.style.transform = `translateZ(0) translateY(${bgTranslateY}px)`;
     }
-
-    // Smooth Render via rAF
-    requestAnimationFrame(render);
+    if (animationLayer) {
+        animationLayer.style.transform = `translateZ(0) translateY(${animTranslateY}px) scale(${scale})`;
+    }
 }
 
 window.addEventListener('scroll', handleScroll, { passive: true });

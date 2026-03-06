@@ -44,20 +44,25 @@
     <main>
         <section id="home" class="hero">
             <div class="hero-sequence-container" id="hero-sequence-container">
-                <div class="background-layer">
-                    <div class="light-bloom"></div>
+                <div class="background-layer" id="hero-background-layer">
                     <div class="grid-floor"></div>
+                    <canvas id="particles-canvas"
+                        style="position:absolute; inset:0; z-index:2; pointer-events:none;"></canvas>
+                    <div class="light-bloom"></div>
                 </div>
                 <div class="animation-layer" id="hero-animation-layer">
                     <canvas id="sequence-canvas"></canvas>
                 </div>
-                <div class="overlay-layer"></div>
+                <div class="overlay-layer">
+                    <div class="overlay-top"></div>
+                    <div class="overlay-bottom"></div>
+                </div>
             </div>
             <div class="container text-layer">
                 <div class="hero-content">
                     <h1>El consultor correcto,<br><span>en el momento exacto.</span></h1>
                     <p>Donde el talento experto encuentra el reto correcto.</p>
-                    <a href="#que-ofrecemos" class="btn btn-primary"
+                    <a href="#que-ofrecemos" class="btn btn-nexora"
                         onclick="event.preventDefault(); document.getElementById('que-ofrecemos').scrollIntoView({behavior:'smooth'});">Encuentra
                         un Consultor</a>
                 </div>

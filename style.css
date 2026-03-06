@@ -146,10 +146,9 @@ h3,
     align-items: center;
     overflow: hidden;
     background: radial-gradient(circle at 50% 30%,
-            #162b55 0%,
-            #0c1c3d 40%,
-            #060f22 70%,
-            #030712 100%);
+            #0b1735 0%,
+            #060f22 40%,
+            #030712 70%);
 }
 
 .background-layer {
@@ -173,6 +172,7 @@ h3,
     transform: perspective(600px) rotateX(75deg);
     mask-image: linear-gradient(to top, black 0%, transparent 60%);
     -webkit-mask-image: linear-gradient(to top, black 0%, transparent 60%);
+    opacity: 0.08;
 }
 
 .light-bloom {
@@ -182,8 +182,8 @@ h3,
     width: 60vw;
     height: 60vw;
     transform: translate(-50%, -50%);
-    background: radial-gradient(circle, rgba(109, 94, 243, 0.15) 0%, rgba(37, 99, 235, 0.05) 40%, transparent 70%);
-    filter: blur(40px);
+    background: radial-gradient(circle, rgba(125, 249, 255, 0.08) 0%, rgba(76, 201, 240, 0.05) 30%, rgba(67, 97, 238, 0.02) 50%, transparent 70%);
+    filter: blur(50px);
 }
 
 .animation-layer {
@@ -210,7 +210,24 @@ h3,
     inset: 0;
     z-index: 3;
     pointer-events: none;
-    background: linear-gradient(to bottom, rgba(3, 7, 18, 0.8) 0%, rgba(3, 7, 18, 0) 30%);
+}
+
+.overlay-top {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 35%;
+    background: linear-gradient(to bottom, rgba(6, 15, 34, 0.9) 0%, rgba(6, 15, 34, 0.4) 35%, transparent 100%);
+}
+
+.overlay-bottom {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 35%;
+    background: linear-gradient(to top, rgba(6, 15, 34, 0.9) 0%, rgba(6, 15, 34, 0.4) 35%, transparent 100%);
 }
 
 .text-layer {
@@ -219,10 +236,24 @@ h3,
 }
 
 .hero-content {
+    position: relative;
     max-width: 900px;
     margin: 0 auto;
     padding-top: 18vh;
     text-align: center;
+}
+
+.hero-content::before {
+    content: '';
+    position: absolute;
+    top: -10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 150vw;
+    height: 150%;
+    background: radial-gradient(ellipse at top center, rgba(3, 7, 18, 0.7) 0%, transparent 60%);
+    z-index: -1;
+    pointer-events: none;
 }
 
 .hero-content h1 {
@@ -262,6 +293,19 @@ h3,
 .btn-primary:hover {
     transform: translateY(-2px);
     box-shadow: 0 10px 20px rgba(34, 197, 85, 0.3);
+}
+
+.btn-nexora {
+    background: linear-gradient(135deg, #4CC9F0, #4361EE);
+    color: var(--white);
+    box-shadow: 0 4px 15px rgba(67, 97, 238, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-nexora:hover {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 10px 25px rgba(76, 201, 240, 0.5);
+    color: var(--white);
 }
 
 /* Consultants Section */
