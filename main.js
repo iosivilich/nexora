@@ -1,76 +1,64 @@
-const canvas = document.getElementById('canvas-nodes');
-const ctx = canvas.getContext('2d');
+const canvas = document.getElementById('sequence-canvas');
+const context = canvas.getContext('2d');
+const sequenceContainer = document.getElementById('hero-sequence-container');
 
-let particles = [];
-const particleCount = 40;
+// Canvas Configuration
+canvas.width = 1400;
+canvas.height = Math.floor(1400 * (9 / 16));
 
-function resize() {
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+const frameCount = 40; // Total number of frames extracted
+const currentFrame = index => (
+    `assets/animations/nexora-network/ezgif-frame-${index.toString().padStart(3, '0')}.png`
+);
+
+const images = [];
+const nexoraSequenceObj = {
+    frame: 0
+};
+
+// Preload Images
+for (let i = 1; i <= frameCount; i++) {
+    const img = new Image();
+    img.src = currentFrame(i);
+    images.push(img);
 }
 
-window.addEventListener('resize', resize);
-resize();
+// Render Initial Frame
+images[0].onload = render;
 
-class Particle {
-    constructor() {
-        this.reset();
-    }
-
-    reset() {
-        this.x = Math.random() * canvas.width;
-        this.y = Math.random() * canvas.height;
-        this.vx = (Math.random() - 0.5) * 0.5;
-        this.vy = (Math.random() - 0.5) * 0.5;
-        this.radius = Math.random() * 2 + 1;
-    }
-
-    update() {
-        this.x += this.vx;
-        this.y += this.vy;
-
-        if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
-        if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
-    }
-
-    draw() {
-        ctx.beginPath();
-        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        ctx.fillStyle = 'rgba(109, 94, 243, 0.5)';
-        ctx.fill();
+function render() {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    const imgIndex = Math.floor(nexoraSequenceObj.frame);
+    if (images[imgIndex]) {
+        context.drawImage(images[imgIndex], 0, 0, canvas.width, canvas.height);
     }
 }
 
-for (let i = 0; i < particleCount; i++) {
-    particles.push(new Particle());
+// Scroll Handling
+function handleScroll() {
+    const heroSection = document.querySelector('.hero');
+    const heroHeight = heroSection.offsetHeight - window.innerHeight; // Scrollable distance within hero
+    const scrollPos = window.scrollY;
+
+    // Calculate Animation Progress
+    let progress = scrollPos / heroHeight;
+    progress = Math.max(0, Math.min(1, progress)); // Clamp between 0 and 1
+
+    // Update Frame
+    nexoraSequenceObj.frame = progress * (frameCount - 1);
+
+    // Update 3D Parallax Motion
+    const rotateX = progress * 2; // max 2deg
+    const translateY = -(progress * 40); // max -40px
+
+    sequenceContainer.style.transform = `translateZ(40px) scale(1.02) rotateX(${rotateX}deg) translateY(${translateY}px)`;
+
+    // Smooth Render via rAF
+    requestAnimationFrame(render);
 }
 
-function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    particles.forEach(p => {
-        p.update();
-        p.draw();
-
-        particles.forEach(p2 => {
-            const dx = p.x - p2.x;
-            const dy = p.y - p2.y;
-            const distance = Math.sqrt(dx * dx + dy * dy);
-
-            if (distance < 150) {
-                ctx.beginPath();
-                ctx.moveTo(p.x, p.y);
-                ctx.lineTo(p2.x, p2.y);
-                ctx.strokeStyle = `rgba(37, 99, 235, ${0.1 * (1 - distance / 150)})`;
-                ctx.stroke();
-            }
-        });
-    });
-
-    requestAnimationFrame(animate);
-}
-
-animate();
+window.addEventListener('scroll', handleScroll, { passive: true });
+window.addEventListener('resize', handleScroll); // Recalculate hero height on resize
 
 // Career Interactivity & Consultant Grid
 const consultants = [

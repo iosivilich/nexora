@@ -130,30 +130,42 @@ h3,
 /* Hero Section */
 .hero {
     position: relative;
-    height: 85vh;
+    height: 200vh;
+    padding-top: 0;
+}
+
+.hero-sequence-container {
+    position: sticky;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    z-index: -1;
     display: flex;
+    justify-content: center;
     align-items: center;
     overflow: hidden;
-    padding-top: 80px;
-}
-
-.hero-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
     background: radial-gradient(circle at 70% 30%, rgba(109, 94, 243, 0.2) 0%, rgba(10, 31, 68, 0) 50%);
+    transform: translateZ(40px) scale(1.02);
+    /* Initial parallax */
+    transition: transform 0.1s ease-out;
+    /* Smooth transform updates */
 }
 
-#canvas-nodes {
-    width: 100%;
-    height: 100%;
+#sequence-canvas {
+    max-width: 1400px;
+    width: 90%;
+    height: auto;
+    aspect-ratio: 16 / 9;
+    max-height: 80vh;
 }
 
 .hero-content {
-    max-width: 700px;
+    position: relative;
+    max-width: 900px;
+    margin: 0 auto;
+    padding-top: 20vh;
+    text-align: center;
+    z-index: 10;
 }
 
 .hero-content h1 {
