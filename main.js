@@ -8,7 +8,7 @@ canvas.height = Math.floor(1400 * (9 / 16));
 
 const frameCount = 40; // Total number of frames extracted
 const currentFrame = index => (
-    `assets/animations/nexora-network/ezgif-frame-${index.toString().padStart(3, '0')}.png`
+    `public/assets/animations/nexora-network/ezgif-frame-${index.toString().padStart(3, '0')}.png`
 );
 
 const images = [];
@@ -37,6 +37,7 @@ function render() {
 // Scroll Handling
 function handleScroll() {
     const heroSection = document.querySelector('.hero');
+    const animationLayer = document.getElementById('hero-animation-layer');
     const heroHeight = heroSection.offsetHeight - window.innerHeight; // Scrollable distance within hero
     const scrollPos = window.scrollY;
 
@@ -47,11 +48,13 @@ function handleScroll() {
     // Update Frame
     nexoraSequenceObj.frame = progress * (frameCount - 1);
 
-    // Update 3D Parallax Motion
-    const rotateX = progress * 2; // max 2deg
+    // Update 3D Parallax Motion (Subtle depth)
     const translateY = -(progress * 40); // max -40px
+    const scale = 1 + (progress * 0.02); // scale from 1 to 1.02
 
-    sequenceContainer.style.transform = `translateZ(40px) scale(1.02) rotateX(${rotateX}deg) translateY(${translateY}px)`;
+    if (animationLayer) {
+        animationLayer.style.transform = `translateZ(0) translateY(${translateY}px) scale(${scale})`;
+    }
 
     // Smooth Render via rAF
     requestAnimationFrame(render);

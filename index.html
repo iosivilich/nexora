@@ -44,9 +44,16 @@
     <main>
         <section id="home" class="hero">
             <div class="hero-sequence-container" id="hero-sequence-container">
-                <canvas id="sequence-canvas"></canvas>
+                <div class="background-layer">
+                    <div class="light-bloom"></div>
+                    <div class="grid-floor"></div>
+                </div>
+                <div class="animation-layer" id="hero-animation-layer">
+                    <canvas id="sequence-canvas"></canvas>
+                </div>
+                <div class="overlay-layer"></div>
             </div>
-            <div class="container">
+            <div class="container text-layer">
                 <div class="hero-content">
                     <h1>El consultor correcto,<br><span>en el momento exacto.</span></h1>
                     <p>Donde el talento experto encuentra el reto correcto.</p>

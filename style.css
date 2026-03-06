@@ -132,6 +132,7 @@ h3,
     position: relative;
     height: 200vh;
     padding-top: 0;
+    background-color: #030712;
 }
 
 .hero-sequence-container {
@@ -139,33 +140,89 @@ h3,
     top: 0;
     width: 100%;
     height: 100vh;
-    z-index: -1;
+    z-index: 0;
     display: flex;
     justify-content: center;
     align-items: center;
     overflow: hidden;
-    background: radial-gradient(circle at 70% 30%, rgba(109, 94, 243, 0.2) 0%, rgba(10, 31, 68, 0) 50%);
-    transform: translateZ(40px) scale(1.02);
-    /* Initial parallax */
-    transition: transform 0.1s ease-out;
-    /* Smooth transform updates */
+    background: radial-gradient(circle at 50% 30%,
+            #162b55 0%,
+            #0c1c3d 40%,
+            #060f22 70%,
+            #030712 100%);
+}
+
+.background-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    pointer-events: none;
+    overflow: hidden;
+}
+
+.grid-floor {
+    position: absolute;
+    bottom: -30%;
+    left: -50%;
+    width: 200%;
+    height: 100%;
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 60px 60px;
+    transform: perspective(600px) rotateX(75deg);
+    mask-image: linear-gradient(to top, black 0%, transparent 60%);
+    -webkit-mask-image: linear-gradient(to top, black 0%, transparent 60%);
+}
+
+.light-bloom {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 60vw;
+    height: 60vw;
+    transform: translate(-50%, -50%);
+    background: radial-gradient(circle, rgba(109, 94, 243, 0.15) 0%, rgba(37, 99, 235, 0.05) 40%, transparent 70%);
+    filter: blur(40px);
+}
+
+.animation-layer {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    mask-image: radial-gradient(circle at center, black 40%, transparent 90%);
+    -webkit-mask-image: radial-gradient(circle at center, black 40%, transparent 90%);
+    transform: translateZ(0);
+    /* Base configuration for parallax */
+    will-change: transform;
 }
 
 #sequence-canvas {
-    max-width: 1400px;
-    width: 90%;
-    height: auto;
-    aspect-ratio: 16 / 9;
-    max-height: 80vh;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.overlay-layer {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    pointer-events: none;
+    background: linear-gradient(to bottom, rgba(3, 7, 18, 0.8) 0%, rgba(3, 7, 18, 0) 30%);
+}
+
+.text-layer {
+    position: relative;
+    z-index: 10;
 }
 
 .hero-content {
-    position: relative;
     max-width: 900px;
     margin: 0 auto;
-    padding-top: 20vh;
+    padding-top: 18vh;
     text-align: center;
-    z-index: 10;
 }
 
 .hero-content h1 {
