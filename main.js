@@ -8,7 +8,7 @@ canvas.height = Math.floor(1400 * (9 / 16));
 
 const frameCount = 40; // Total number of frames extracted
 const currentFrame = index => (
-    `public/assets/animations/nexora-network/ezgif-frame-${index.toString().padStart(3, '0')}.png`
+    `assets/animations/nexora-network/ezgif-frame-${index.toString().padStart(3, '0')}.png`
 );
 
 const images = [];
