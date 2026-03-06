@@ -581,6 +581,11 @@ h3,
     background-size: 1.2rem;
 }
 
+.finder-select option {
+    background: #ffffff;
+    color: #000000;
+}
+
 .btn-text {
     background: none;
     border: none;
@@ -889,6 +894,11 @@ h3,
     color: var(--white);
     outline: none;
     font-family: inherit;
+}
+
+.input-group select option {
+    background: #ffffff;
+    color: #000000;
 }
 
 .input-group textarea {
